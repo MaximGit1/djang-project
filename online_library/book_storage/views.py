@@ -2,7 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 def index(request):
-    return HttpResponse("Страница приложения")
+    return render(request, 'book_storage/index.html', {'title': 'Главная страница'})
 
 def book_page(request, id_book):
-    return HttpResponse(f"book has {id_book} id")
+    data = {'title': f'Книга {id_book}', 'id_book': id_book}
+    return render(request, 'book_storage/book_page.html', data)
