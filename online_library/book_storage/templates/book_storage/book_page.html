@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ title }}</title>
-</head>
-<p>Книга {{ id_book }} и её содержимое</p>
-<body>
+{% extends 'book_storage/base.html' %}
 
-</body>
-</html>
+{% block content %}
+<h1>{{ title }}</h1>
+<p>book_page.html</p>
+
+{% endblock %}

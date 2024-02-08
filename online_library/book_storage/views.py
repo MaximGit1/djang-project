@@ -1,8 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import *
 
+menu = ('Онлайн библиотека', 'Новинки', 'Жанры', 'Авторы', 'Издательство', '[search]')
 def index(request):
-    return render(request, 'book_storage/index.html', {'title': 'Главная страница'})
+    books = Book.objects.all()
+    data = {'title': 'Главная страница', 'menu': menu, 'books': books}
+    return render(request, 'book_storage/index.html', data)
 
 def book_page(request, id_book):
     data = {'title': f'Книга {id_book}', 'id_book': id_book}

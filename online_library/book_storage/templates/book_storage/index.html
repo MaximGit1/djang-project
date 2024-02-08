@@ -1,11 +1,18 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ title }}</title>
-</head>
-    <h1>Главная страница</h1>
-<body>
+{% extends 'book_storage/base.html' %}
 
-</body>
-</html>
+{% block content %}
+<h1>{{ title }}</h1>
+<p>Index.html</p>
+<ul>
+    {%for book_card in books%}
+    <li>
+        <img src="{{ book_card.book_image.url }}" alt="book img">
+
+        <h2>{{ book_card.title }}</h2>
+        <a href="{{ book_card.mp3_path.url }}">mp3</a>
+        <a href="{{ book_card.fb2_path.url }}">fb2</a>
+        <br>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
