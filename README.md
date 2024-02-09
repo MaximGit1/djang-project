@@ -11,3 +11,6 @@
     + adding a list of menu items
     + adding "base.html"
     + rework and correction of migration errors. Creating a save path
++ version 5 --- "Upgrade migrations"
+    + adding TypeOfBook migration
+    + upgrade Book migration

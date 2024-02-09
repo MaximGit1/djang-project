@@ -21,6 +21,12 @@ class Genre(models.Model):
         return self.genre
 
 
+class TypeOfBook(models.Model):
+    type_of_book = models.CharField(max_length=16)
+
+    def __str__(self):
+        return self.type_of_book
+
 
 class Book(models.Model):
     class Helper:
@@ -31,17 +37,19 @@ class Book(models.Model):
                 file_path += string.ascii_lowercase[rnd.randint(0, len(string.ascii_lowercase)-1)]
                 file_path += str(rnd.randint(0, 9))
             return file_path
+
     file_path = Helper.create_file_path()
     title = models.CharField(max_length=50)
     id_author = models.ForeignKey(Author, on_delete=models.CASCADE)
     writing_year = models.IntegerField()
     id_publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE)
-    id_genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
+    id_genre = models.ManyToManyField(Genre)
+    type_of_book = models.ForeignKey(TypeOfBook, on_delete=models.CASCADE)
     description = models.TextField(max_length=250)
     book_image = models.ImageField(upload_to=f"books/%Y/%m{file_path}")
     fb2_path = models.FileField(upload_to=f"books/%Y/%m{file_path}")
-    epub_path = models.FileField(upload_to=f"books/%Y/%m{file_path}")  #blank
-    mp3_path = models.FileField(upload_to=f"books/%Y/%m{file_path}")  #blank
+    epub_path = models.FileField(upload_to=f"books/%Y/%m{file_path}", blank=True)
+    mp3_path = models.FileField(upload_to=f"books/%Y/%m{file_path}", blank=True)
     time_create = models.DateTimeField(auto_now_add=True)
     time_update = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(default=True)
