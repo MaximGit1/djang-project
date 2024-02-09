@@ -1,15 +1,17 @@
 {% extends 'book_storage/base.html' %}
 
 {% block content %}
-<ul>
+<div class="products">
     {%for book_card in books%}
     {% if book_card.is_published %}
-    <li>
-        <a href="{% url 'book_page' book_card.id %}"><img src="{{ book_card.book_image.url }}" alt="book img"></a>
-        <a href="{% url 'book_page' book_card.id %}"><h2>{{ book_card.title }}</h2></a>
-        <a href="{% url 'author_page' book_card.id_author.id %}">{{ book_card.id_author }}</a>
-    </li>
+<div class="card" style="width: 18rem;">
+  <a href="{% url 'book_page' book_card.id %}"><img src="{{ book_card.book_image.url }}" alt="book img"></a>
+  <div class="card-body">
+    <h3 class="card-text"><a href="{% url 'book_page' book_card.id %}">{{ book_card.title }}</a></h3>
+    <p class="card-text"><a href="{% url 'author_page' book_card.id_author.id %}">{{ book_card.id_author }}</a></p>
+  </div>
+</div>
     {% endif %}
     {% endfor %}
-</ul>
+</div>
 {% endblock %}

@@ -9,7 +9,9 @@ def index(request):
     return render(request, 'book_storage/index.html', data)
 
 def book_page(request, id_book):
-    data = {'title': f'Книга {id_book}', 'id_book': id_book}
+    book = Book.objects.get(pk=id_book)
+    genres = book.id_genre.all()
+    data = {'title': f'Книга {book.title}', 'book': book, 'genres': genres}
     return render(request, 'book_storage/book_page.html', data)
 
 def author_page(request, id_author):

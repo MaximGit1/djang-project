@@ -14,3 +14,6 @@
 + version 5 --- "Upgrade migrations"
     + adding TypeOfBook migration
     + upgrade Book migration
++ version 6 --- "Displaying data on screen"
+    + Display of all published books on the main page
+    + Correct display of book pages

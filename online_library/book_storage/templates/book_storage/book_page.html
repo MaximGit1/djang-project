@@ -1,7 +1,22 @@
 {% extends 'book_storage/base.html' %}
 
 {% block content %}
-<h1>{{ title }}</h1>
-<p>book_page.html</p>
+<img src="{{ book.book_image.url }}">
+<h1>{{ book.title }}</h1>
+<h3><a href="{% url 'author_page' book.id_author.id %}">{{ book.id_author }}</a></h3>
 
+<p>{{ book.writing_year }}</p>
+<p>{{ book.id_publisher }}</p>
+{% for genre in genres %}
+<p>{{ genre }}</p>
+{% endfor %}
+<p>{{ book.type_of_book }}</p>
+<p>{{ book.description }}</p>
+<p><a href="{{ book.fb2_path.url }}">fb2</a></p>
+{% if book.epub_path %}
+<p><a href="{{ book.epub_path.url }}">epub</a></p>
+{% endif %}
+{% if book.mp3_path %}
+<p><a href="{{ book.mp3_path.url }}">mp3</a></p>
+{% endif %}
 {% endblock %}
