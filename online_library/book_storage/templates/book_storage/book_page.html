@@ -5,12 +5,10 @@
 <h1>{{ book.title }}</h1>
 <h3><a href="{% url 'author_page' book.id_author.id %}">{{ book.id_author }}</a></h3>
 
-<p>{{ book.writing_year }}</p>
-<p>{{ book.id_publisher }}</p>
-{% for genre in genres %}
-<p>{{ genre }}</p>
-{% endfor %}
-<p>{{ book.type_of_book }}</p>
+<p>Год написания: {{ book.writing_year }}</p>
+<p>Издательство: {{ book.id_publisher }}</p>
+<p>Жанры: {{ genres|join:", " }}</p>
+<p>Вид жанра: {{ book.type_of_book }}</p>
 <p>{{ book.description }}</p>
 <p><a href="{{ book.fb2_path.url }}">fb2</a></p>
 {% if book.epub_path %}

@@ -1,7 +1,26 @@
 {% extends 'book_storage/base.html' %}
+{% load static %}
 
 {% block content %}
-<h1>{{ title }}</h1>
-<p>author_page.html</p>
+
+{% if author.photo %}
+<img src="{{ author.photo.url }}", width="140px">
+{% else %}
+<img src="{% static 'book_storage/imges/default.jpg' %}", width="140px">
+{% endif %}
+<h1>{{ author.fio_author }}</h1>
+<p>{{ author.biography }}</p>
+
+{%for book_card in books%}
+    {% if book_card.is_published %}
+<div class="card" style="width: 18rem;">
+  <a href="{% url 'book_page' book_card.id %}"><img src="{{ book_card.book_image.url }}" alt="book img"></a>
+  <div class="card-body">
+    <h3 class="card-text"><a href="{% url 'book_page' book_card.id %}">{{ book_card.title }}</a></h3>
+  </div>
+</div>
+    {% endif %}
+    {% endfor %}
+
 
 {% endblock %}

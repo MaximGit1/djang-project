@@ -4,6 +4,8 @@ from django.db import models
 
 class Author(models.Model):
     fio_author = models.CharField(max_length=50)
+    biography = models.TextField(max_length=2100)  #makemigration
+    photo = models.ImageField(upload_to=f"authors/avatar", blank=True)
 
     def __str__(self):
         return self.fio_author
@@ -40,12 +42,13 @@ class Book(models.Model):
 
     file_path = Helper.create_file_path()
     title = models.CharField(max_length=50)
-    id_author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    id_author = models.ForeignKey(Author, on_delete=models.CASCADE)  # few authors
+    #book_series = models.CharField(max_length=50, blank=True)
     writing_year = models.IntegerField()
     id_publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE)
     id_genre = models.ManyToManyField(Genre)
     type_of_book = models.ForeignKey(TypeOfBook, on_delete=models.CASCADE)
-    description = models.TextField(max_length=250)
+    description = models.TextField(max_length=750)
     book_image = models.ImageField(upload_to=f"books/%Y/%m{file_path}")
     fb2_path = models.FileField(upload_to=f"books/%Y/%m{file_path}")
     epub_path = models.FileField(upload_to=f"books/%Y/%m{file_path}", blank=True)

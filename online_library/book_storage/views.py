@@ -11,9 +11,11 @@ def index(request):
 def book_page(request, id_book):
     book = Book.objects.get(pk=id_book)
     genres = book.id_genre.all()
-    data = {'title': f'Книга {book.title}', 'book': book, 'genres': genres}
+    data = {'title': f'Книга {book.title}', 'book': book, 'genres': genres, 'menu': menu}
     return render(request, 'book_storage/book_page.html', data)
 
 def author_page(request, id_author):
-    data = {'title': f'Страница автора', 'id_author': id_author}
+    author = Author.objects.get(pk=id_author)
+    books = Book.objects.filter(id_author=id_author)
+    data = {'title': f'Страница автора', 'author': author, 'books': books}
     return render(request, 'book_storage/author_page.html', data)
