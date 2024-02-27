@@ -3,28 +3,220 @@ html, body{
     padding: 0;
     height: 100%;
     width: 100%;
+    font: normal 14px/20px ALS Sirius,Arial,Helvetica Neue,Helvetica,sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: #000000;
+    background-color: #f5b6b6;
+}
+button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    margin-right: 10px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background-color: transparent;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+footer{
+    background-color: #333;
 }
 
 a {
-    color: #0059b2;
+    color: #0066cc;
     text-decoration: none;
+    transition: color 0.3s ease-in-out;
 }
 
 a:hover {
-    color: #CC0000;
+    color: #553737;
     text-decoration: underline;
 }
-
-img {
-    max-width: 600px;
+.logo img{
+    width: 95px;
     height: auto;
-    # определиться с основным размером книг
 }
+.main-header {
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2px 20px;
+    max-width: 1536px;
+    margin: 0 auto;
+    width: calc(90vw );
 
+
+    }
+ul{
+    list-style: none;
+    display: flex;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}
+.main-nav ul {
+    display: flex;
+ }
+ .main-nav ul li {
+    margin-right: 40px;
+}
+.header_search {
+    height: 10%;
+    display: flex;
+  }
+.header_search_input{
+    width: 14vw;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+.header_search_button{
+    padding: 10px 15px;
+    border: 1px solid #007bff;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
+}
+.header_search_button:hover {
+    border: 1px solid #014792;
+    background-color: #014792;
+}
 .products {
-    width: 80%;
+    display: flex;
+    width: 100%;
     margin: auto;
     padding: auto;
     float: left;
-    background-color: red
+    flex-wrap: wrap;
 }
+.card{
+    padding: 20px 30px;
+    width: 240px;
+    height: 430px;
+}
+.card img {
+    max-height: 250px;
+}
+.card-text {
+    margin: 0px;
+    color: #ccc;
+}
+.FunctionalBlock{
+    display: inline;
+}
+.FunctionalBlock button{
+    width: auto;
+    color: #3d3dc7;
+    color: var(--link-color,#3d3dc7);
+    text-decoration: none;
+}
+.FunctionalBlock_button:hover{
+    color: #5757e4;
+}
+.FunctionalBlock_save_text{
+    white-space: nowrap;
+}
+.FunctionalBlock_save_icon{
+    margin-right: 10px;
+}
+/* .FunctionalBlock ul{    
+justify-content: center;
+} */
+.FunctionalBlock ul li{
+    display: flex;
+}
+.layout_book{
+    flex: 1 0 auto;
+    min-height: 400px;
+}
+.box_main{
+    box-sizing: border-box;
+    max-width: 1536px;
+    margin: 0 auto;
+    padding: 0 0 24px;
+    position: relative;
+}
+.left_info{
+    margin-left: 30px;
+    width: 180px;
+}
+.left_info img{width: 180px;}
+.left_info button{
+    padding: 10px 15px;
+    border: 1px solid #007bff;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 7px;
+    width: 180px;
+}
+.left_info button:hover {
+    border: 1px solid #014792;
+    background-color: #014792;
+}
+.book_main{
+    display: flex;
+}
+.right_info{
+    padding: 10px 20px;
+    width: 300px;
+}
+.right_info a{
+    padding: 10px 15px;
+    border: 1px solid #007bff;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 7px;
+    width: 180px;
+}
+.right_info a:hover{
+    border: 1px solid #014792;
+    background-color: #014792;
+}
+.right_info p{
+    margin: 30px 0;
+}
+.type_book{
+    display: inline-flex;
+}
+.type_book div:last-child{margin-left: 10px;}
+.author{
+    display: inline-flex;
+    align-items: center;
+}
+.center_info{
+    padding: 0 20px;
+    width: 1500px;
+}
+.author a:last-child{
+    margin-left: 9px;
+}
+.genres{
+    display: flex;
+}
+.genres p{
+    margin-right: 10px;
+}
+.date_of_writing{
+    display: flex;
+}
+.author_page{
+    padding-left: 2%;
+    padding-top: 2%;
+    display: flex;
+}
+.books_list h2{padding-left: 2%;}
+.author_info{padding-left: 2%;}

@@ -1,20 +1,90 @@
 {% extends 'book_storage/base.html' %}
+{% load static %}
 
 {% block content %}
-<img src="{{ book.book_image.url }}">
-<h1>{{ book.title }}</h1>
-<h3><a href="{% url 'author_page' book.id_author.id %}">{{ book.id_author }}</a></h3>
 
-<p>Год написания: {{ book.writing_year }}</p>
-<p>Издательство: {{ book.id_publisher }}</p>
-<p>Жанры: {{ genres|join:", " }}</p>
-<p>Вид жанра: {{ book.type_of_book }}</p>
-<p>{{ book.description }}</p>
-<p><a href="{{ book.fb2_path.url }}">fb2</a></p>
+    <div class="layout_book">
+        
+<div class="FunctionalBlock">
+<ul>
+    <li>
+        <button type="button" class="FunctionalBlock_button" id="button_save">
+            <div class="button">
+                <span class="FunctionalBlock_save_icon">❤</span>
+                <span class="FunctionalBlock_save_text">Отложить</span>
+              </div>
+        </button>
+        <button type="button" class="FunctionalBlock_button" id="button_readen">
+            <div class="button">
+                <span class="FunctionalBlock_icon">✓</span>
+                <span class="FunctionalBlock_save_text">Отметить прочитанным</span>
+              </div>
+        </button>
+        <button type="button" class="FunctionalBlock_button" id="button_copy">
+            <div class="button">
+                <span class="FunctionalBlock_icon_copy">🔗</span>
+                <span class="FunctionalBlock_save_text">Нажми меня</span>
+              </div>
+        </button>
+        
+</ul></div><div class="book_main">
+<div class="left_info">
+    <img src="{{ book.book_image.url }}">
+    <button type="button" class="read_fragment">Читать фрагмент</button>
+</div>
+<div class="center_info">
+    <h1>{{ book.title }}</h1>
+    <div class="type_book">
+        {% if book.mp3_path %}
+                        <img src="{% static 'book_storage/images/text_audio.svg' %}" alt="Изображение"><div>текст и аудиокнига</div>
+                        {% else %}
+                        <img src="{% static 'book_storage/images/text.svg' %}" alt="Изображение"><div>текст</div>
+                    {% endif %}
+    </div>
+    <div class="seriya">Входит в серию...</div>
+    <h3>Автор</h3>
+    <div class="author"><a href="{% url 'author_page' book.id_author.id %}">
+        {% if author.photo %}
+    <img src="{{ author.photo.url }}", width="40px">
+    {% else %}
+    <img src="{% static 'book_storage/images/default.jpg' %}", width="40px">
+    {% endif %}</a>
+        <a href="{% url 'author_page' book.id_author.id %}">{{ book.id_author }}</a></div>
+        <h3>Жанры</h3>
+        <div class="genres">
+            {% for genre in genres %}
+            <p>{{ genre }}</p>
+            {% endfor %}</div>
+            <div class="date_of_writing">
+                <h3>Дата написания</h3></div>
+    {{ book.writing_year }}
+    <div class="publisher">
+        <h3>Издатель</h3>
+        <p>{{ book.id_publisher }}</p>
+    </div>
+<div class="type">
+<h3>Тип книги(мб убрать этот атрибут?)</h3>
+    <p>{{ book.type_of_book }}</p>
+</div>
+<div class="description">
+    <h3>Описание</h3>
+    <p>{{ book.description }}</p>
+</div>
+
+</div>
+<div class="right_info">
+    <p><a class="fb2" href="{{ book.fb2_path.url }}">Скачать FB2</a></p>
 {% if book.epub_path %}
-<p><a href="{{ book.epub_path.url }}">epub</a></p>
+<p><a class="epub" href="{{ book.epub_path.url }}">Скачать EPUB</a></p>
 {% endif %}
 {% if book.mp3_path %}
-<p><a href="{{ book.mp3_path.url }}">mp3</a></p>
+<p><a class="mp3" href="{{ book.mp3_path.url }}">Скачать MP3</a></p>
 {% endif %}
+</div>
+</div>
+</div>
+
+
+
+
 {% endblock %}

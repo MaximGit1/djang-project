@@ -3,19 +3,47 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'book_storage/css/style.css' %}">
     <title>{{ title }}</title>
 </head>
 <body>
 {% block main_menu %}
-<ul>
-    {% for elem in menu %}
-    <li>{{ elem }}</li>
-    {% endfor %}
-</ul>
+<div class="back_head" style="background-color: #333;">
+<header class="main-header">
+    <div class="logo">
+        <a  href="/">
+        <img src="{% static 'book_storage/images/logo.png' %}">
+        </a>
+    </div>
+    <nav class="main-nav">
+        <ul>
+            {% for elem in menu %}
+            <li>{{ elem }}</li>
+            {% endfor %}
+        </ul>
+    </nav>
+    <form>
+    <div class="header_search">
+        <input type="search" class="header_search_input" placeholder="Искать" value="">
+        <button type="submit" class="header_search_button">Найти</button>
+    </div>
+</form>
+    <figure>
+        <img src="{% static 'book_storage/images/auth.png' %}" width = "50px" >
+        <figcaption>Войти</figcaption>
+    </figure>
+</header>
+</div>
+<div class="box_main">
 {% endblock main_menu %}
+
 
 {% block content %}
 
 {% endblock %}
+</div>{% comment %} <footer>
+    <p>Компания *****. Все права защищены.</p>
+</footer> {% endcomment %}
+<script src="{% static 'book_storage/js/main.js' %}"></script>
 </body>
 </html>
