@@ -1,0 +1,24 @@
+{% extends 'book_storage/base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% for author in authors %}
+<div class="author_img">
+    {% if author.photo %}
+        <img src="{{ author.photo.url }}" alt="{{ author.fio_author }} photo" height='300px'>
+    {% else %}
+        <img src="{% static 'book_storage/images/default.jpg' %}" alt="Default photo" height='300px'>
+    {% endif %}
+  </div>
+<div class="author_info">
+    <h1>{{ author.fio_author }}</h1>
+    <p>{{ author.biography }}</p>
+
+  </div>
+{% endfor %}
+
+
+
+
+{% endblock %}

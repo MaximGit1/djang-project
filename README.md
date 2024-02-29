@@ -20,3 +20,8 @@
 + version 7 --- "Displaying author_page and updating models"
     + Author page display
     + Editing Models
++ version 8 --- "Global update pages/admin_panel"
+    + ADD authors_page.html
+    + Russify admin panel
+    + Create Meta in all models
+    + ADD css, js rofls

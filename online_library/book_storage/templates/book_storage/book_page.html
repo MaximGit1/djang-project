@@ -45,7 +45,7 @@
     <h3>Автор</h3>
     <div class="author"><a href="{% url 'author_page' book.id_author.id %}">
         {% if author.photo %}
-    <img src="{{ author.photo.url }}", width="40px">
+    <img src="{{ author.photo.url }}",  width="40px">
     {% else %}
     <img src="{% static 'book_storage/images/default.jpg' %}", width="40px">
     {% endif %}</a>

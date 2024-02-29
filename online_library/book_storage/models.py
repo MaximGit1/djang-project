@@ -1,6 +1,9 @@
 import string, random as rnd
 
 from django.db import models
+import string, random as rnd
+
+from django.db import models
 
 class Author(models.Model):
     fio_author = models.CharField(max_length=50)
@@ -10,11 +13,19 @@ class Author(models.Model):
     def __str__(self):
         return self.fio_author
 
+    class Meta:
+        verbose_name = 'Автор'
+        verbose_name_plural = 'Авторы'
+
 class Publisher(models.Model):
     publisher_name = models.CharField(max_length=50)
 
     def __str__(self):
         return self.publisher_name
+
+    class Meta:
+        verbose_name = 'Издатель'
+        verbose_name_plural = 'Издатели'
 
 class Genre(models.Model):
     genre = models.CharField(max_length=50)
@@ -22,12 +33,20 @@ class Genre(models.Model):
     def __str__(self):
         return self.genre
 
+    class Meta:
+        verbose_name = 'Жанр'
+        verbose_name_plural = 'Жанры'
+
 
 class TypeOfBook(models.Model):
     type_of_book = models.CharField(max_length=16)
 
     def __str__(self):
         return self.type_of_book
+
+    class Meta:
+        verbose_name = 'Тип книги'
+        verbose_name_plural = 'Тип книг'
 
 
 class Book(models.Model):
@@ -41,7 +60,7 @@ class Book(models.Model):
             return file_path
 
     file_path = Helper.create_file_path()
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=50, verbose_name='Название')
     id_author = models.ForeignKey(Author, on_delete=models.CASCADE)  # few authors
     #book_series = models.CharField(max_length=50, blank=True)
     writing_year = models.IntegerField()
@@ -55,7 +74,12 @@ class Book(models.Model):
     mp3_path = models.FileField(upload_to=f"books/%Y/%m{file_path}", blank=True)
     time_create = models.DateTimeField(auto_now_add=True)
     time_update = models.DateTimeField(auto_now=True)
-    is_published = models.BooleanField(default=True)
+    is_published = models.BooleanField(default=True, verbose_name='Опубликовано')
+
+    class Meta:
+        verbose_name = 'Книга'
+        verbose_name_plural = 'Книги'
+        ordering = ['time_update', 'title']
 
     def __str__(self):
         return self.title
