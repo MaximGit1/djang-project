@@ -25,3 +25,7 @@
     + Russify admin panel
     + Create Meta in all models
     + ADD css, js rofls
++ version 9 --- "Refresh global update"
+    + Update all models, create new models,
+    + Update db
+    + Create interactive menu
