@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .models import *
 
-menu = ('Жанры', 'Авторы', 'Издательство', 'О нас')  # 'Онлайн библиотека',
+menu = (('Жанры', 'home'), ('Авторы', 'authors_page'), ('Издательство', 'home'), ('О нас', 'home'))  # 'Онлайн библиотека',
 def index(request):
     books = Book.objects.all()
     data = {'title': 'Главная страница', 'menu': menu, 'books': books}

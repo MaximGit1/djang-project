@@ -11,14 +11,14 @@
 <div class="back_head" style="background-color: #333;">
 <header class="main-header">
     <div class="logo">
-        <a  href="/">
+        <a  href="{% url 'home'  %}">
         <img src="{% static 'book_storage/images/logo.png' %}">
         </a>
     </div>
     <nav class="main-nav">
         <ul>
             {% for elem in menu %}
-            <li>{{ elem }}</li>
+            <li><a href="{% url elem.1  %}">{{ elem.0 }}</a></li>
             {% endfor %}
         </ul>
     </nav>

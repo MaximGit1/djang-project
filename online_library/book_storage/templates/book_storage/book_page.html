@@ -41,7 +41,13 @@
                         <img src="{% static 'book_storage/images/text.svg' %}" alt="Изображение"><div>текст</div>
                     {% endif %}
     </div>
-    <div class="seriya">Входит в серию...</div>
+    <div class="seriya">
+    {% if book.book_series %}
+        <p>Входит в серию <a href="#">{{ book.book_series }}</a></p>
+    {% else %}
+        <p>Данная книга не входит в цикл книг</p>
+    {% endif %}
+    </div>
     <h3>Автор</h3>
     <div class="author"><a href="{% url 'author_page' book.id_author.id %}">
         {% if author.photo %}
