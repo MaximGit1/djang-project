@@ -29,3 +29,7 @@
     + Update all models, create new models,
     + Update db
     + Create interactive menu
++ version 10 -- "Test with data"
+    + Update book_page.html
+    + Add data for db
+    + Update models, urls, views

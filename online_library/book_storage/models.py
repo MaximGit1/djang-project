@@ -75,6 +75,7 @@ class Book(models.Model):
     title = models.CharField(max_length=50, verbose_name='Название')
     id_author = models.ForeignKey(Author, on_delete=models.CASCADE, verbose_name='Автор')  # few authors
     book_series = models.ForeignKey(BookSeries, on_delete=models.PROTECT, null=True, blank=True, verbose_name='Цикл')
+    book_ind = models.SmallIntegerField(verbose_name='Номер в цикле', default=0)
     writing_year = models.IntegerField(verbose_name='Год написания')
     id_publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE, verbose_name='Издатель')
     id_genre = models.ManyToManyField(Genre, verbose_name='Жанры')

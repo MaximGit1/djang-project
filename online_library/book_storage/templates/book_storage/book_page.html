@@ -43,7 +43,12 @@
     </div>
     <div class="seriya">
     {% if book.book_series %}
-        <p>Входит в серию <a href="#">{{ book.book_series }}</a></p>
+        <p>Входит в серию <b>{{ book.book_series }}</b>:</p>
+        {% if ser_books %}
+            {% for book_ind in ser_books %}
+                <a href="{% url 'book_page' book_ind.2 %}">{{ book_ind.1 }}</a>
+            {% endfor %}
+        {% endif %}
     {% else %}
         <p>Данная книга не входит в цикл книг</p>
     {% endif %}

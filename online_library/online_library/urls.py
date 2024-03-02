@@ -1,7 +1,7 @@
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-from book_storage.views import index
+#from book_storage.views import index
 from online_library import settings
 
 urlpatterns = [
