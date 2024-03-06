@@ -9,13 +9,13 @@ from django.urls import reverse, reverse_lazy
 from .forms import LoginUserForm, RegisterUserForm, UserNickForm
 from book_storage.models import LikedBook, Book
 
-menu = (('Жанры', 'home'), ('Авторы', 'authors_page'), ('Издательство', 'home'), ('О нас', 'home'))
+menu = (('Жанры', 'home'), ('Авторы', 'authors_page'), ('Издательство', 'home'), ('О нас', 'about'))
 
 
 class LoginUser(LoginView):
     form_class = LoginUserForm
     template_name = 'users/login.html'
-    extra_context = {'title': 'Авторизация'}
+    extra_context = {'title': 'Авторизация', 'menu': menu}
 
     def get_success_url(self):
         return reverse_lazy('home')
@@ -33,7 +33,7 @@ def register_users(request):
             return HttpResponseRedirect(reverse('home'))
     else:
         form = RegisterUserForm()
-    return render(request, 'users/register.html', {'form': form})
+    return render(request, 'users/register.html', {'form': form, 'menu': menu})
 
 @login_required
 def profile(request):

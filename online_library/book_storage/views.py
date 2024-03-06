@@ -6,7 +6,7 @@ from django.views.generic import ListView
 from .models import *
 
 
-menu = (('Жанры', 'home'), ('Авторы', 'authors_page'), ('Издательство', 'home'), ('О нас', 'home'))  # 'Онлайн библиотека',
+menu = (('Жанры', 'home'), ('Авторы', 'authors_page'), ('Издательство', 'home'), ('О нас', 'about'))
 
 #class LibraryHome(ListView):
 #    model = Book
@@ -70,3 +70,7 @@ def read_page(request, id_book):
     book = Book.objects.get(pk=id_book)
     data = {'title': f'{book.title}', 'menu': menu, 'book': book}
     return render(request, 'book_storage/read_page.html', data)
+
+def about_page(request):
+    context = {'title': 'Кто мы?', 'menu': menu}
+    return render(request, 'book_storage/about.html', context)

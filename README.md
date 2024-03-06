@@ -35,3 +35,6 @@
     + Update models, urls, views
 + version 11 -- "Create auth"
     + created auth and other rofls with auth function
++ version 12 -- "Update few moments"
+    + update base, login html pages
+    + create about page

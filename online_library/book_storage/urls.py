@@ -11,4 +11,5 @@ urlpatterns = [
     path('book-read/<int:id_book>/', read_page, name='read_page'),
     path('author/<int:id_author>/', author_page, name='author_page'),
     path('authors/', authors_page, name='authors_page'),
+    path('about/', about_page, name='about'),
 ]

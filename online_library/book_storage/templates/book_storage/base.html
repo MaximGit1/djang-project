@@ -36,11 +36,7 @@
             <img src="{% static 'book_storage/images/default.jpg' %}" width = "50px" style="border-radius: 50px" >
             {% endif %}
         </a>
-        {% if not request.user.is_authenticated %}
-        <a href="{% url 'users:profile' %}"><figcaption>Войти</figcaption></a>
-        {% else %}
 
-        {% endif %}
     </figure>
 </header>
 </div>
