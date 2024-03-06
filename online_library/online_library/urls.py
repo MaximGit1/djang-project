@@ -7,6 +7,7 @@ from online_library import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('book_storage.urls')),
+    path('users/', include('users.urls', namespace='users')),
 ]
 
 

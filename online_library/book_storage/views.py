@@ -1,5 +1,6 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import ListView
 
 from .models import *
@@ -7,12 +8,22 @@ from .models import *
 
 menu = (('Жанры', 'home'), ('Авторы', 'authors_page'), ('Издательство', 'home'), ('О нас', 'home'))  # 'Онлайн библиотека',
 
-class LibraryHome(ListView):
-    model = Book
-    template_name = 'book_storage/index.html'
-    context_object_name = 'books'
-    extra_context = {'title': 'Главная', 'menu': menu}
-    #paginate_by = 12
+#class LibraryHome(ListView):
+#    model = Book
+#    template_name = 'book_storage/index.html'
+#    context_object_name = 'books'
+#    extra_context = {'title': 'Главная', 'menu': menu}
+#    #paginate_by = 12
+
+def home(request, id_genre=None, type_of_book=None):
+    if id_genre:
+        books = Book.objects.filter(id_genre=id_genre)
+    elif type_of_book:
+        books = Book.objects.filter(type_of_book=type_of_book)
+    else:
+        books = Book.objects.all()
+    context = {'title': 'Главная', 'menu': menu, 'books': books}
+    return render(request, 'book_storage/index.html', context)
 
 
 def book_page(request, id_book):
@@ -39,3 +50,23 @@ def authors_page(request):
     books = Book.objects.all()
     data = {'title': f'Все авторы', 'authors': authors, 'menu': menu}
     return render(request, 'book_storage/authors_page.html', data)
+
+@login_required
+def add_liked_book(request, id_book):
+    book = Book.objects.get(pk=id_book)
+    lk_book = LikedBook.objects.filter(user=request.user, liked_book=book)
+    if not lk_book.exists():
+        LikedBook.objects.create(user=request.user, liked_book=book)
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+@login_required
+def remove_liked_book(request, id_lk_book):
+    lk_book = LikedBook.objects.get(pk=id_lk_book)
+    lk_book.delete()
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+
+def read_page(request, id_book):
+    book = Book.objects.get(pk=id_book)
+    data = {'title': f'{book.title}', 'menu': menu, 'book': book}
+    return render(request, 'book_storage/read_page.html', data)

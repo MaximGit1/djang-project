@@ -4,6 +4,7 @@ from django.db import models
 import string, random as rnd
 
 from django.db import models
+from users.models import User
 
 class Author(models.Model):
     fio_author = models.CharField(max_length=50, verbose_name='ФИО автора')
@@ -97,3 +98,11 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class LikedBook(models.Model):
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    liked_book = models.ForeignKey(to=Book, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'Отложенная книга {self.liked_book.title} для {self.user.username}'

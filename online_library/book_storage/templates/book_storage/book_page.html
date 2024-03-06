@@ -11,7 +11,7 @@
         <button type="button" class="FunctionalBlock_button" id="button_save">
             <div class="button">
                 <span class="FunctionalBlock_save_icon">❤</span>
-                <span class="FunctionalBlock_save_text">Отложить</span>
+                <span class="FunctionalBlock_save_text"><a href="{% url 'book_add' book.id %}">Отложить</a>></span>
               </div>
         </button>
         <button type="button" class="FunctionalBlock_button" id="button_readen">
@@ -26,11 +26,11 @@
                 <span class="FunctionalBlock_save_text">Нажми меня</span>
               </div>
         </button>
-        
+
 </ul></div><div class="book_main">
 <div class="left_info">
     <img src="{{ book.book_image.url }}">
-    <button type="button" class="read_fragment">Читать фрагмент</button>
+    <a href="{% url 'read_page' book.id %}" class="read_fragment">Читать фрагмент</a>
 </div>
 <div class="center_info">
     <h1>{{ book.title }}</h1>

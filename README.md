@@ -33,3 +33,5 @@
     + Update book_page.html
     + Add data for db
     + Update models, urls, views
++ version 11 -- "Create auth"
+    + created auth and other rofls with auth function

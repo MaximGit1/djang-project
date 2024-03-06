@@ -1,0 +1,14 @@
+{% extends 'book_storage/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="left_info">
+    <img src="{{ book.book_image.url }}" style="margin-top: 20px;">
+</div>
+<h3 class="read_text">
+{{ book.read_text }}
+</h3>
+<div class="download_book" style="display: flex; justify-content: center;">
+<a href="{% url 'book_page' book.id %}">Скачать книгу</a>
+</div>
+{% endblock %}

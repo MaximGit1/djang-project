@@ -1,0 +1,29 @@
+{% extends 'book_storage/base.html' %}
+{% load static %}
+{% block content %}
+<h1>Профиль</h1>
+    {% if user.avatar %}
+    <img src="{{ user.avatar.url }}" width="100px" style="border-radius: 50px">
+    {% else %}
+    <img src="{% static 'book_storage/images/default.jpg' %}" width="100px" style="border-radius: 50px">
+    {% endif %}
+
+<h2>@{{ user.username }}</h2><br>
+<h2>nick: {{ user.nickname }}</h2>
+
+
+
+<div class="liked-books">
+    {% if lk_books %}
+    {% for lk_book in lk_books %}
+        <img src="{{lk_book.liked_book.book_image.url}}" width="150"> <br>
+        <a href="{% url 'book_page' lk_book.liked_book.id %}">{{ lk_book.liked_book.title }}</a> <br>
+        <a href="{% url 'book_remove' lk_book.id %}">Удалить из списка</a>
+    {% endfor %}
+    {% else%}
+    <p>У вас нет отложенных книг</p>
+    {% endif %}
+</div>
+
+<a href="{% url 'users:logout' %}">Выйти</a>
+{% endblock %}

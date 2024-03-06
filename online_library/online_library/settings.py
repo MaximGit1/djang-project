@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'book_storage.apps.BookStorageConfig'
+    'book_storage.apps.BookStorageConfig',
+    'users.apps.UsersConfig'
 ]
 
 MIDDLEWARE = [
@@ -127,3 +128,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+LOGOUT_REDIRECT_URL = 'home'
+LOGIN_URL = 'users:login'
+AUTH_USER_MODEL = 'users.User'
