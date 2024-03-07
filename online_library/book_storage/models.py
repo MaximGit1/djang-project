@@ -89,6 +89,7 @@ class Book(models.Model):
     mp3_path = models.FileField(upload_to=f"books/%Y/%m{file_path}", blank=True, verbose_name='mp3 файл')
     time_create = models.DateTimeField(auto_now_add=True, verbose_name='Создано')
     time_update = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
+    rating = models.IntegerField(default=0, verbose_name='Рейтинг')
     is_published = models.BooleanField(default=True, verbose_name='Опубликовано')
 
     class Meta:
@@ -106,3 +107,9 @@ class LikedBook(models.Model):
 
     def __str__(self):
         return f'Отложенная книга {self.liked_book.title} для {self.user.username}'
+
+class BookRating(models.Model):
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    book = models.ForeignKey(to=Book, on_delete=models.CASCADE)
+    rating = models.IntegerField(default=0)
+

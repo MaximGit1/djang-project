@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 from django.views.generic import ListView
 
 from .models import *
@@ -36,7 +37,13 @@ def book_page(request, id_book):
 
     genres = book.id_genre.all()
     author = book.id_author
-    data = {'title': f'Книга {book.title}', 'book': book, 'genres': genres, 'menu': menu, 'author': author, 'ser_books': ser_books}
+    rate = 0
+    if request.user.is_authenticated:
+        rate = BookRating.objects.filter(user=request.user, book=book)
+        if rate.exists():
+            rate = BookRating.objects.get(user=request.user, book=book)
+            rate = rate.rating
+    data = {'title': f'Книга {book.title}', 'book': book, 'genres': genres, 'menu': menu, 'author': author, 'ser_books': ser_books, 'rate': rate}
     return render(request, 'book_storage/book_page.html', data)
 
 def author_page(request, id_author):
@@ -74,3 +81,28 @@ def read_page(request, id_book):
 def about_page(request):
     context = {'title': 'Кто мы?', 'menu': menu}
     return render(request, 'book_storage/about.html', context)
+
+
+@login_required
+def add_book_rating(request, id_book, value):
+    if value == 1:
+        value = 1
+    elif value == 2:
+        value = -1
+    else:
+        value = 0
+    book = Book.objects.get(pk=id_book)
+    book_rating = BookRating.objects.filter(user=request.user, book=book)
+    if not book_rating.exists():
+        BookRating.objects.create(user=request.user, book=book, rating=value)
+        book.rating += value
+        book.save()
+    else:
+        book_rating = BookRating.objects.get(book=book, user=request.user)
+        if book_rating.rating != value:
+            book_rating.rating = value
+            book_rating.save()
+            book.rating += (value * 2)
+            book.save()
+    uri = reverse('book_page', args=(id_book,))
+    return redirect(uri)

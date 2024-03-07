@@ -38,3 +38,6 @@
 + version 12 -- "Update few moments"
     + update base, login html pages
     + create about page
++ version 13 -- "Few moments"
+    + update about page
+    + add rating system

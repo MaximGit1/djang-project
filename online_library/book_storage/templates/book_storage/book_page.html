@@ -30,6 +30,14 @@
 </ul></div><div class="book_main">
 <div class="left_info">
     <img src="{{ book.book_image.url }}">
+    {% if book.rating > 0  %}
+      <div class="rate-green" style="height: 5px; width: 180px; background-color: green"></div>
+      {% elif book.rating < 0 %}
+      <div class="rate-red" style="height: 5px; width: 180px; background-color: red"></div>
+      {% else %}
+      <div class="rate-grey" style="height: 5px; width: 180px; background-color: grey"></div>
+      {% endif %}
+    <br>
     <a href="{% url 'read_page' book.id %}" class="read_fragment">Читать фрагмент</a>
 </div>
 <div class="center_info">
@@ -61,7 +69,19 @@
     <img src="{% static 'book_storage/images/default.jpg' %}", width="40px">
     {% endif %}</a>
         <a href="{% url 'author_page' book.id_author.id %}">{{ book.id_author }}</a></div>
-        <h3>Жанры</h3>
+    <br>
+    <p>Рейтинг: {{ book.rating }}</p>
+    {% if rate == 1 %}
+    <a href="{% url 'book_rating_change' book.id 1 %}"><img src="{% static 'book_storage/images/like-selected.png' %}" width="25px"></a>
+    {% else %}
+    <a href="{% url 'book_rating_change' book.id 1 %}"><img src="{% static 'book_storage/images/like.png' %}" width="25px"></a>
+    {% endif %}
+    {% if rate == -1 %}
+    <a href="{% url 'book_rating_change' book.id 2 %}"><img src="{% static 'book_storage/images/dislike-selected.png' %}" width="25px"></a>
+    {% else %}
+    <a href="{% url 'book_rating_change' book.id 2 %}"><img src="{% static 'book_storage/images/dislike.png' %}" width="25px"></a>
+    {% endif %}
+    <h3>Жанры</h3>
         <div class="genres">
             {% for genre in genres %}
             <p>{{ genre }}</p>
