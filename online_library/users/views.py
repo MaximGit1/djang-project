@@ -6,8 +6,9 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 
-from .forms import LoginUserForm, RegisterUserForm, UserNickForm
+from .forms import LoginUserForm, RegisterUserForm, UserEditForm
 from book_storage.models import LikedBook, Book
+from .models import User
 
 menu = (('Жанры', 'home'), ('Авторы', 'authors_page'), ('Издательство', 'home'), ('О нас', 'about'))
 
@@ -37,9 +38,24 @@ def register_users(request):
 
 @login_required
 def profile(request):
-    #form = UserNickForm()  'form': form
-    user_id = request.user.id #  filter(user=user_id)
+    if request.method == 'POST':
+        form = UserEditForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            if len(str(form.data.get('nickname')).replace(' ', '')) >= 3:
+                form.save()
+            return HttpResponseRedirect(reverse('users:profile'))
+    else:
+        form = UserEditForm(instance=request.user)
+    user_id = request.user.id
     lk_books = LikedBook.objects.filter(user=user_id)
-
-    context = {'title': 'Личный кабинет', 'menu': menu, 'user': request.user, 'lk_books': lk_books}
+    context = {'title': 'Личный кабинет', 'menu': menu, 'user': request.user, 'lk_books': lk_books, 'form': form}
     return render(request, 'users/profile.html', context)
+
+def other_profile(request, id_user):
+    user_sel = User.objects.get(pk=id_user)
+    if request.user.is_authenticated:
+        if request.user.username == user_sel.username:
+            return HttpResponseRedirect(reverse('users:profile'))
+    lk_books = LikedBook.objects.filter(user=id_user)
+    context = {'title': 'Профиль', 'menu': menu, 'user': user_sel, 'lk_books': lk_books}
+    return render(request, 'users/other-profile.html', context)

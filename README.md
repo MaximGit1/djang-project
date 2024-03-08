@@ -41,3 +41,6 @@
 + version 13 -- "Few moments"
     + update about page
     + add rating system
++ version 14 -- "Local upgrade"
+    +   create other_profile page
+    +   upgrade base, book_page, index, login, profile, register html pages

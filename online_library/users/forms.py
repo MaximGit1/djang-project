@@ -18,9 +18,10 @@ class RegisterUserForm(UserCreationForm):
         model = get_user_model()
         fields = ['username', 'password1', 'password2']
 
-class UserNickForm(UserChangeForm):
-    nickname = forms.CharField(label='Логин', widget=forms.TextInput(attrs={'class': 'form-input'}))
-    #avatar = forms.ImageField(widget=forms.FileInput(attrs={'class': 'custom-file-input'}))
+class UserEditForm(forms.ModelForm):
+    nickname = forms.CharField(label='Логин', widget=forms.TextInput(), max_length=20)
+    avatar = forms.ImageField(widget=forms.FileInput(), required=False)
     class Meta:
         model = get_user_model()
         fields = ('avatar', 'nickname')
+        #exclude = ["password"]

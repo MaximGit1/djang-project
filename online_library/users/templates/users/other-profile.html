@@ -17,26 +17,11 @@
     {% if lk_books %}
     {% for lk_book in lk_books %}
         <a href="{% url 'book_page' lk_book.liked_book.id %}"><img src="{{lk_book.liked_book.book_image.url}}" width="150"></a><br>
-        <a href="{% url 'book_remove' lk_book.id %}">Удалить из списка</a>
     {% endfor %}
     {% else%}
-    <p>У вас нет отложенных книг</p>
+    <p>У пользователя нет отложенных книг</p>
     {% endif %}
 </div>
 <br>
-<h2>Изменение данных</h2>
-<form action="{% url 'users:profile' %}" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {% for f in form %}
-    <div>{{f}}</div>
-    {% endfor %}
-    <button type="submit">Изменить</button>
-</form>
-<br>
-
-<a href="{% url 'users:logout' %}">Выйти</a>
-
-<br>
-
 
 {% endblock %}

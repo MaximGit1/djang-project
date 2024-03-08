@@ -19,11 +19,14 @@ menu = (('Жанры', 'home'), ('Авторы', 'authors_page'), ('Издате
 def home(request, id_genre=None, type_of_book=None):
     if id_genre:
         books = Book.objects.filter(id_genre=id_genre)
+        message = f'Все книги с жанром: {Genre.objects.get(pk=id_genre)}'
     elif type_of_book:
         books = Book.objects.filter(type_of_book=type_of_book)
+        message = f'Все книги с тегом: {TypeOfBook.objects.get(pk=type_of_book)}'
     else:
         books = Book.objects.all()
-    context = {'title': 'Главная', 'menu': menu, 'books': books}
+        message = ''
+    context = {'title': 'Главная', 'menu': menu, 'books': books, 'message': message}
     return render(request, 'book_storage/index.html', context)
 
 

@@ -15,11 +15,11 @@
               </div>
         </button>
         <button type="button" class="FunctionalBlock_button" id="button_readen">
-            <div class="button">
+            {% comment %}<div class="button">
                 <span class="FunctionalBlock_icon">✓</span>
                 <span class="FunctionalBlock_save_text">Отметить прочитанным</span>
               </div>
-        </button>
+        </button>{% endcomment %}
         <button type="button" class="FunctionalBlock_button" id="button_copy">
             <div class="button">
                 <span class="FunctionalBlock_icon_copy">🔗</span>
@@ -83,8 +83,9 @@
     {% endif %}
     <h3>Жанры</h3>
         <div class="genres">
+            <a href="{% url 'home_type' book.type_of_book.id %}">{{ book.type_of_book }}</a>
             {% for genre in genres %}
-            <p>{{ genre }}</p>
+            <a href="{% url 'home_genre' genre.id %}">{{ genre }}</a>
             {% endfor %}</div>
             <div class="date_of_writing">
                 <h3>Дата написания</h3></div>
@@ -93,10 +94,7 @@
         <h3>Издатель</h3>
         <p>{{ book.id_publisher }}</p>
     </div>
-<div class="type">
-<h3>Тип книги(мб убрать этот атрибут?)</h3>
-    <p>{{ book.type_of_book }}</p>
-</div>
+
 <div class="description">
     <h3>Описание</h3>
     <p>{{ book.description }}</p>

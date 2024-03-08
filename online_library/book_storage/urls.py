@@ -3,8 +3,8 @@ from .views import *
 
 urlpatterns = [
     path('', home, name='home'),
-    path('genre/<int:id_genre>', home, name='home'),
-    path('type/<int:type_of_book>', home, name='home'),
+    path('genre/<int:id_genre>', home, name='home_genre'),
+    path('type/<int:type_of_book>', home, name='home_type'),
     path('book/<int:id_book>/', book_page, name='book_page'),
     path('book/add/<int:id_book>/', add_liked_book, name='book_add'),
     path('book/remove/<int:id_lk_book>/', remove_liked_book, name='book_remove'),

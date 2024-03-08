@@ -4,7 +4,14 @@
 <h1>Авторизация</h1>
 <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+    <div>
+        <label>Логин</label>
+        {{form.username}}
+    </div>
+    <div>
+        <label>Пароль</label>
+        {{form.password}}
+    </div>
     <p><button type="submit">Войти</button></p>
 </form>
 <a href="{% url 'users:register' %}">Нет аккаунта?</a>

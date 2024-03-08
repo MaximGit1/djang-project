@@ -31,7 +31,7 @@
     <figure>
         <a href="{% url 'users:profile' %}">
             {% if request.user.is_authenticated and user.avatar%}
-                    <img src="{{ user.avatar.url }}" width="50px" style="border-radius: 50px">
+                    <img src="{{ request.user.avatar.url }}" width="50px" style="border-radius: 50px">
             {% else %}
             <img src="{% static 'book_storage/images/default.jpg' %}" width = "50px" style="border-radius: 50px" >
             {% endif %}
