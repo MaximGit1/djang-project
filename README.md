@@ -44,3 +44,7 @@
 + version 14 -- "Local upgrade"
     +   create other_profile page
     +   upgrade base, book_page, index, login, profile, register html pages
++ version 15 -- "Я уже не знаю что писать"
+    + короче, всё четко
+    + это с альфа на бетту выкатилось
+    + осталось исправить баги и добавить приколов

@@ -113,3 +113,18 @@ class BookRating(models.Model):
     book = models.ForeignKey(to=Book, on_delete=models.CASCADE)
     rating = models.IntegerField(default=0)
 
+class Comment(models.Model):
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    text = models.TextField(max_length=300)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
+        ordering = ['-created',]
+
+    def __str__(self):
+        return f'Комментарий {self.user} к книге: {self.book}'

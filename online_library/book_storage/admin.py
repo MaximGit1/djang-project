@@ -24,3 +24,4 @@ admin.site.register(models.TypeOfBook)
 admin.site.register(models.BookSeries)
 admin.site.register(models.LikedBook)  ## del
 admin.site.register(models.BookRating)  ## del
+admin.site.register(models.Comment)  ## del

@@ -81,7 +81,7 @@
     {% else %}
     <a href="{% url 'book_rating_change' book.id 2 %}"><img src="{% static 'book_storage/images/dislike.png' %}" width="25px"></a>
     {% endif %}
-    <h3>Жанры</h3>
+    <h3>Теги</h3>
         <div class="genres">
             <a href="{% url 'home_type' book.type_of_book.id %}">{{ book.type_of_book }}</a>
             {% for genre in genres %}
@@ -99,6 +99,40 @@
     <h3>Описание</h3>
     <p>{{ book.description }}</p>
 </div>
+    {% if request.user.is_authenticated %}
+        {% if check %}
+            {% include 'book_storage/includes/comment_form.html' %}
+        {% endif %}
+    {% else %}
+    <h4>Чтобы оставить комментарий, <a href="{% url 'users:login' %}">авторизируйтесь</a></h4>
+    {% endif %}
+
+
+<div class="comments">
+    {% with comments.count as total_comments %}
+    <h3>{{ total_comments }} комментариев</h3>
+    {% endwith %}
+    {% for comment in comments %}
+    <div class="comment">
+        {% if comment.user.avatar %}
+        <a href="{% url 'users:other_profile' comment.user.id %}"><img src="{{ comment.user.avatar.url }}" width="100px"></a>
+        {% else %}
+        <a href="{% url 'users:other_profile' comment.user.id %}"><img src="{% static 'book_storage/images/default.jpg' %}" width="100px"></a>
+        {% endif %}
+        <a href="{% url 'users:other_profile' comment.user.id %}">{{ comment.user.nickname }}</a>
+        {{ comment.text|linebreaks }}
+        {% if request.user.is_authenticated %}
+            {% if request.user.id == comment.user.id %}
+                <a href="{% url 'delete_comment' comment.id %}">Удалить</a>
+            {% endif %}
+        {% endif %}
+
+    </div>
+    {% empty %}
+    <p>Здесь нет комментариев. Вы можите стать первым!</p>
+    {% endfor %}
+</div>
+
 
 </div>
 <div class="right_info">

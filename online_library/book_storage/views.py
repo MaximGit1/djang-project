@@ -3,9 +3,9 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.views.generic import ListView
-
+from .forms import CommentForm
 from .models import *
-
+from django.views.decorators.http import require_POST
 
 menu = (('Жанры', 'home'), ('Авторы', 'authors_page'), ('Издательство', 'home'), ('О нас', 'about'))
 
@@ -46,7 +46,16 @@ def book_page(request, id_book):
         if rate.exists():
             rate = BookRating.objects.get(user=request.user, book=book)
             rate = rate.rating
-    data = {'title': f'Книга {book.title}', 'book': book, 'genres': genres, 'menu': menu, 'author': author, 'ser_books': ser_books, 'rate': rate}
+    comments = Comment.objects.filter(book=id_book, active=True)
+    form = CommentForm  # ()
+    check = False
+    if request.user.is_authenticated:
+        user = request.user
+        check_comment = Comment.objects.filter(book=id_book, user=user)
+        check = not bool(check_comment)
+
+    data = {'title': f'Книга {book.title}', 'book': book, 'genres': genres, 'menu': menu, 'author': author,
+            'ser_books': ser_books, 'rate': rate, 'comments': comments, 'form': form, 'check': check}
     return render(request, 'book_storage/book_page.html', data)
 
 def author_page(request, id_author):
@@ -108,4 +117,27 @@ def add_book_rating(request, id_book, value):
             book.rating += (value * 2)
             book.save()
     uri = reverse('book_page', args=(id_book,))
+    return redirect(uri)
+
+
+def book_comments(request, id_book):
+    book1 = Book.objects.get(pk=id_book)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            form.save(commit=False)
+            text = form.data.get('text')
+            Comment.objects.create(user=request.user, book=book1, text=text)
+            uri = reverse('book_page', args=(id_book,))
+            return redirect(uri)
+    else:
+        form = CommentForm()
+    context = {'form': form}
+    return render(request, 'book_storage/comment.html', context)
+
+def delete_comment(request, id_comment):
+    comment = Comment.objects.get(pk=id_comment)
+    id_book = comment.book.id
+    uri = reverse('book_page', args=(id_book,))
+    comment.delete()
     return redirect(uri)
