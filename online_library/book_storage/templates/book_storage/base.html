@@ -22,9 +22,9 @@
             {% endfor %}
         </ul>
     </nav>
-    <form>
+    <form action="{% url 'search' %}">
     <div class="header_search">
-        <input type="search" class="header_search_input" placeholder="Искать" value="">
+        <input type="search" class="header_search_input" placeholder="Искать" value="" name="search-all">
         <button type="submit" class="header_search_button">Найти</button>
     </div>
 </form>
@@ -48,7 +48,7 @@
 
 {% endblock %}
 </div>{% comment %} <footer>
-    <p>Компания *****. Все права защищены.</p>
+    <p>Online library. Все права не защищены.</p>
 </footer> {% endcomment %}
 <script src="{% static 'book_storage/js/main.js' %}"></script>
 </body>

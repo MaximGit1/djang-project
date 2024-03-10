@@ -1,0 +1,16 @@
+{% extends 'book_storage/base.html' %}
+{% block content %}
+<h4>Жанры</h4>
+{% for genre in genres %}
+    <a href="{% url 'home_genre' genre.id %}">{{ genre.genre }}</a>
+{% endfor %}
+
+<h4>Тип книг</h4>
+{% for type in types %}
+    <a href="{% url 'home_type' type.id %}">{{ type.type_of_book }}</a>
+{% endfor %}
+
+
+
+
+{% endblock %}

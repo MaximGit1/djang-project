@@ -1,0 +1,55 @@
+{% extends 'book_storage/base.html' %}
+{% load static %}
+{% block content %}
+<h2>Книги по вашему запросу</h2>
+<div class="products">
+    {%for book_card in books%}
+    {% if book_card.is_published %}
+<div class="card">
+  <a href="{% url 'book_page' book_card.id %}"><img src="{{ book_card.book_image.url }}" alt="book img"></a>
+  <div class="card-body">
+      {% if book_card.rating > 0  %}
+      <div class="rate-green" style="height: 5px; width: 155px; background-color: green"></div>
+      {% elif book_card.rating < 0 %}
+      <div class="rate-red" style="height: 5px; width: 155px; background-color: red"></div>
+      {% else %}
+      <div class="rate-grey" style="height: 5px; width: 155px; background-color: grey"></div>
+      {% endif %}
+    <h3 class="card-text"><a href="{% url 'book_page' book_card.id %}">{{ book_card.title }}</a></h3>
+    <p class="card-text"><a href="{% url 'author_page' book_card.id_author.id %}">{{ book_card.id_author }}</a></p>
+  </div>
+</div>
+    {% endif %}
+    {% empty %}
+    <p>По вашему запросу нет книг :(</p>
+    {% endfor %}
+</div>
+
+<h2>Авторы по вашему запросу</h2>
+{% for author in authors %}
+<div class="author_img">
+    {% if author.photo %}
+    <a href="{% url 'author_page' author.id %}">
+        <img src="{{ author.photo.url }}" alt="{{ author.fio_author }} photo" height='300px'></a>
+    {% else %}
+    <a href="{% url 'author_page' author.id %}"><img src="{% static 'book_storage/images/default.jpg' %}"
+                                                      alt="Default photo" height='300px'></a>
+    {% endif %}
+  </div>
+<div class="author_info">
+
+    <h1><a href="{% url 'author_page' author.id %}">{{ author.fio_author }}</a></h1>
+    <p>{{ author.biography }}</p>
+  </div>
+{% empty %}
+    <p>По вашему запросу мы не нашли такого автора :(</p>
+{% endfor %}
+
+
+
+
+<a href="{% url 'home' %}">На главную</a>
+
+
+
+{% endblock %}

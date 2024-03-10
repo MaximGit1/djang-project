@@ -8,6 +8,7 @@ class BookAdmin(admin.ModelAdmin):
     search_fields = ('title',)
     list_editable = ('is_published',)
     list_filter = ('time_update', 'time_create')
+    filter_horizontal = ('id_genre',)
 
 class PublisherAdmin(admin.ModelAdmin):
     search_fields = ('publisher_name',)
@@ -22,6 +23,3 @@ admin.site.register(models.Publisher, PublisherAdmin)
 admin.site.register(models.Book, BookAdmin)
 admin.site.register(models.TypeOfBook)
 admin.site.register(models.BookSeries)
-admin.site.register(models.LikedBook)  ## del
-admin.site.register(models.BookRating)  ## del
-admin.site.register(models.Comment)  ## del

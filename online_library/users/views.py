@@ -10,7 +10,7 @@ from .forms import LoginUserForm, RegisterUserForm, UserEditForm
 from book_storage.models import LikedBook, Book
 from .models import User
 
-menu = (('Жанры', 'home'), ('Авторы', 'authors_page'), ('Издательство', 'home'), ('О нас', 'about'))
+menu = (('Жанры', 'tags_page'), ('Авторы', 'authors_page'), ('О нас', 'about'))
 
 
 class LoginUser(LoginView):

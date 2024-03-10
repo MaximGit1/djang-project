@@ -12,6 +12,9 @@
         <label>Пароль</label>
         {{form.password}}
     </div>
+    <div>
+        {{form.errors}}
+    </div>
     <p><button type="submit">Войти</button></p>
 </form>
 <a href="{% url 'users:register' %}">Нет аккаунта?</a>

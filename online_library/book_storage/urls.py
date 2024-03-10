@@ -14,5 +14,7 @@ urlpatterns = [
     path('about/', about_page, name='about'),
     path('book/<int:id_book>/rating/<int:value>/', add_book_rating, name='book_rating_change'),
     path('book/<int:id_book>/comment/', book_comments, name='book_comment'),
-    path('book/comment/<int:id_comment>', delete_comment, name='delete_comment')
+    path('book/comment/<int:id_comment>', delete_comment, name='delete_comment'),
+    path('search/', search, name='search'),
+    path('tags/', tags_page, name='tags_page'),
 ]

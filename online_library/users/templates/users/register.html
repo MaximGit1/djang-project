@@ -16,6 +16,11 @@
         <label>Пароль ещё раз</label>
         {{form.password2}}
     </div>
+    <div>
+    {{form.username.errors}}
+    {{form.password2.errors}}
+    </div>
+
     <p><button type="submit">Сохранить</button></p>
 </form>
 <a href="{% url 'users:login' %}">Есть аккаунт?</a>

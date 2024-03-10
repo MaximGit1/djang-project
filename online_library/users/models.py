@@ -14,7 +14,7 @@ class User(AbstractUser):
     avatar = models.ImageField(upload_to='users/%Y/%m', blank=True, null=True, verbose_name='Аватар')
     nickname = models.CharField(default=nick, max_length=15, verbose_name='Отображаемое имя')
     class Meta:
-        verbose_name = 'Пользователь'
+        verbose_name = 'Пользователя'
         verbose_name_plural = 'Пользователи'
 
 
