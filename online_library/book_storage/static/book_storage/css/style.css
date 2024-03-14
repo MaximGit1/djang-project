@@ -10,6 +10,14 @@ html, body{
     color: #000000;
     background-color: #f5b6b6;
 }
+.wrapper {
+    position: relative;
+    min-height: 100%;
+  }
+.back_head{
+    background-color: #333;
+    position: relative;
+  }
 button{
     display: flex;
     align-items: center;
@@ -24,8 +32,14 @@ button{
     cursor: pointer;
 }
 
-footer{
+.footer{
     background-color: #333;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 80px;
+    color: #ccc;
 }
 
 a {
@@ -36,13 +50,13 @@ a {
 
 a:hover {
     color: #553737;
-    text-decoration: underline;
+    text-decoration: none;
 }
 .logo img{
     width: 95px;
     height: auto;
 }
-.main-header {
+.header {
     background-color: #333;
     color: #fff;
     display: flex;
@@ -52,8 +66,6 @@ a:hover {
     max-width: 1536px;
     margin: 0 auto;
     width: calc(90vw );
-
-
     }
 ul{
     list-style: none;
@@ -69,6 +81,18 @@ ul{
  }
  .main-nav ul li {
     margin-right: 40px;
+}
+.main-nav ul li button{
+    color: #0066cc;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+    display: contents;
+    font: normal 14px/20px ALS Sirius,Arial,Helvetica Neue,Helvetica,sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+}
+.main-nav ul li button:hover {
+    color: #553737;
 }
 .header_search {
     height: 10%;
@@ -99,13 +123,14 @@ ul{
     width: 100%;
     margin: auto;
     padding: auto;
-    float: left;
-    flex-wrap: wrap;
+    flex-wrap: wrap; 
 }
 .card{
     padding: 20px 30px;
-    width: 240px;
+    width: 200px;
     height: 430px;
+    flex: 0 0 auto;
+    margin-right: 15px;
 }
 .card img {
     max-height: 250px;
@@ -113,6 +138,9 @@ ul{
 .card-text {
     margin: 0px;
     color: #ccc;
+}
+.card-body :last-child{
+    margin-bottom: 20px;
 }
 .FunctionalBlock{
     display: inline;
@@ -142,11 +170,12 @@ justify-content: center;
     flex: 1 0 auto;
     min-height: 400px;
 }
-.box_main{
+.content{
     box-sizing: border-box;
     max-width: 1536px;
     margin: 0 auto;
     padding: 0 0 24px;
+    padding-bottom: 90px;
     position: relative;
 }
 .left_info{
@@ -211,7 +240,7 @@ padding-bottom: 10px;}
 .genres{
     display: flex;
 }
-.genres p{
+.genres a{
     margin-right: 10px;
 }
 .date_of_writing{
@@ -222,7 +251,11 @@ padding-bottom: 10px;}
     padding-top: 2%;
     display: flex;
 }
-.books_list h2{padding-left: 2%;}
+.books_list{
+    display: flex;
+    width: 100%;
+    transition: transform 0.5s ease-in-out;
+}
 .author_info{padding-left: 2%;}
 .read_text{
     font-family: "Roboto", sans-serif;
@@ -241,4 +274,243 @@ padding-bottom: 10px;}
 .download_book a:hover {
     border: 1px solid #014792;
     background-color: #014792;
+}
+.container_books {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+.slider__btn_prev,
+.slider__btn_next {
+    cursor: pointer;
+    position: absolute; 
+    top: 50%; 
+    transform: translateY(-230%); 
+    width: 30px;
+    height: 30px;
+    background-color: white;
+    border: #000000;
+    border-radius: 20px;
+    padding: 20px 20px;
+    margin-bottom: 300px;
+    z-index: 1;
+}
+
+.slider__btn_prev {
+    left: 0; 
+}
+
+.slider__btn_next {
+    right: 0;
+}
+.genre-form{
+    height: 300px;
+    width: 1000px;
+}
+.container-authors{
+    display: flex;
+    width: 100%;
+}
+.card-author{
+    padding: 20px 30px;
+    width: 256px;
+    flex: 0 0 auto;
+    margin-right: 20px;
+}
+
+.dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+.dialog-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+}
+
+.gen, .type {
+    flex: 1;
+}
+
+.gen {
+    margin-right: 100px; 
+}
+.auth-form {
+    max-width: 400px;
+    margin: 20vh auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.auth-form h1 {
+    margin-bottom: 20px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    color: #333;
+}
+
+.auth-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+.auth-form input[type="text"],
+.auth-form input[type="password"] {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.auth-form button[type="submit"] {
+    width: 96%;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.auth-form button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.auth-form .error-message {
+    color: #ff0000;
+    margin-bottom: 20px;
+}
+.background-form{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}
+.f-group-profile{
+    display: flex;
+    justify-content: center;
+}
+.s-group-profile{
+
+    justify-content: center;    
+}
+.liked-books {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    text-align: center;
+    margin-top: 20px;
+}
+.card-like{
+    margin-right: 20px;
+    width: 150px;
+    display: block;
+}
+.logout-link {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #ff4500;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+
+}
+
+.logout-link:hover {
+    background-color: #8b4444;
+}
+
+.update {
+    padding: 20px;
+    margin-left: 200px;
+}
+
+.update form {
+    margin-top: 20px;
+}
+
+.update form button[type="submit"] {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 10px 0 10px 0
+}
+
+.update form button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+.registration-form {
+    max-width: 400px;
+    margin: 20vh auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.registration-form h1 {
+    margin-bottom: 20px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    color: #333;
+}
+
+.registration-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+}
+
+.registration-form input[type="text"],
+.registration-form input[type="password"] {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.registration-form button[type="submit"] {
+    width: 96%;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.registration-form button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.registration-form .error-message {
+    color: #ff0000;
+    margin-bottom: 20px;
 }

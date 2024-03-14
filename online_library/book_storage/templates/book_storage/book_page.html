@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-
+<script src="{% static 'book_storage/js/book_page.js' %}"></script>
     <div class="layout_book">
         
 <div class="FunctionalBlock">
@@ -53,9 +53,12 @@
     {% if book.book_series %}
         <p>Входит в серию <b>{{ book.book_series }}</b>:</p>
         {% if ser_books %}
+        <button onclick="show_seria()" style="color: blue; font: normal 14px/20px ALS Sirius,Arial,Helvetica Neue,Helvetica,sans-serif;">Посмотреть содержимое</button>
+        <div class="sh_books" style="display: none;">
             {% for book_ind in ser_books %}
-                <a href="{% url 'book_page' book_ind.2 %}">{{ book_ind.1 }}</a>
+                <a href="{% url 'book_page' book_ind.2 %}" >{{ book_ind.1 }}</a><br>
             {% endfor %}
+        </div>
         {% endif %}
     {% else %}
         <p>Данная книга не входит в цикл книг</p>

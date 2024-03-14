@@ -4,19 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="{% static 'book_storage/css/style.css' %}">
+    <script src="{% static 'book_storage/js/base.js' %}"></script>
     <title>{{ title }}</title>
 </head>
 <body>
+    <div class="wrapper">
 {% block main_menu %}
 <div class="back_head" style="background-color: #333;">
-<header class="main-header">
+<div class="header">
     <div class="logo">
         <a  href="{% url 'home'  %}">
         <img src="{% static 'book_storage/images/logo.png' %}">
         </a>
     </div>
     <nav class="main-nav">
+
         <ul>
+
+            <li><button type="button" onclick="showModal()">Жанры</button></li>
             {% for elem in menu %}
             <li><a href="{% url elem.1  %}">{{ elem.0 }}</a></li>
             {% endfor %}
@@ -36,20 +41,35 @@
             <img src="{% static 'book_storage/images/default.jpg' %}" width = "50px" style="border-radius: 50px" >
             {% endif %}
         </a>
-
     </figure>
-</header>
 </div>
-<div class="box_main">
+<div class="dialog-overlay" onclick="hideModal()">
+    <div class="dialog-content" onclick="event.stopPropagation()">
+        <div class="gen">
+            <h4>Жанры</h4>
+            {% for genre in genres %}
+                <a href="{% url 'home_genre' genre.id %}">{{ genre.genre }}</a><br>
+            {% endfor %}
+        </div>
+        <div class="type">
+            <h4>Тип книг</h4>
+            {% for type in types %}
+                <a href="{% url 'home_type' type.id %}">{{ type.type_of_book }}</a><br>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+</div>
 {% endblock main_menu %}
-
+<div class="content">
 
 {% block content %}
 
 {% endblock %}
-</div>{% comment %} <footer>
-    <p>Online library. Все права не защищены.</p>
-</footer> {% endcomment %}
-<script src="{% static 'book_storage/js/main.js' %}"></script>
+</div>
+ <div class="footer">
+    <p class="text-center" style="padding-top: 30px;">Online library. Все права не защищены.</p>   
+ </div>
+</div>
 </body>
 </html>

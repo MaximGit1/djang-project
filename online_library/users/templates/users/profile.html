@@ -1,29 +1,20 @@
 {% extends 'book_storage/base.html' %}
 {% load static %}
 {% block content %}
+<script src="{% static 'book_storage/js/profile.js' %}"></script>
+<div class="group-profile">
+    <div class="f-group-profile">
+    <div class="data-profile">
 <h1>Профиль</h1>
     {% if user.avatar %}
     <img src="{{ user.avatar.url }}" width="100px" style="border-radius: 50px">
     {% else %}
     <img src="{% static 'book_storage/images/default.jpg' %}" width="100px" style="border-radius: 50px">
     {% endif %}
-
 <h2>@{{ user.username }}</h2>
 <h2>Имя: {{ user.nickname }}</h2><br>
-
-
-<h3>Список отложенных книг</h3>
-<div class="liked-books">
-    {% if lk_books %}
-    {% for lk_book in lk_books %}
-        <a href="{% url 'book_page' lk_book.liked_book.id %}"><img src="{{lk_book.liked_book.book_image.url}}" width="150"></a><br>
-        <a href="{% url 'book_remove' lk_book.id %}">Удалить из списка</a>
-    {% endfor %}
-    {% else%}
-    <p>У вас нет отложенных книг</p>
-    {% endif %}
-</div>
-<br>
+    </div>
+<div class="update">
 <h2>Изменение данных</h2>
 <form action="{% url 'users:profile' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
@@ -31,12 +22,27 @@
     <div>{{f}}</div>
     {% endfor %}
     <button type="submit">Изменить</button>
-</form>
+    <button class="logout-link" onclick="confirmLogout()" data-logout-url="{% url 'users:logout' %}">Выйти из аккаунта</button>
+</form></div></div>
+<div class="s-group-profile">
+    <h3 style="text-align:center">Список отложенных книг</h3> 
+<div class="liked-books">
+    
+    {% if lk_books %}
+    {% for lk_book in lk_books %}
+        <div class="card-like">
+        <a href="{% url 'book_page' lk_book.liked_book.id %}"><img src="{{lk_book.liked_book.book_image.url}}" width="150"></a>
+        <a href="{% url 'book_remove' lk_book.id %}">Удалить из списка</a>
+        </div>
+    {% endfor %}
+    {% else%}
+    <p>У вас нет отложенных книг</p>
+    {% endif %}
+</div>
+
 <br>
 
-<a href="{% url 'users:logout' %}">Выйти</a>
 
-<br>
-
-
+</div>
+</div>
 {% endblock %}

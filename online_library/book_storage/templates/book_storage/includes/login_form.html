@@ -1,0 +1,22 @@
+{% extends 'book_storage/base.html' %}
+{% block content %}
+
+<h1>Авторизация</h1>
+<form method="post">
+    {% csrf_token %}
+    <div>
+        <label>Логин</label>
+        {{form.username}}
+    </div>
+    <div>
+        <label>Пароль</label>
+        {{form.password}}
+    </div>
+    <div>
+        {{form.errors}}
+    </div>
+    <p><button type="submit">Войти</button></p>
+</form>
+<a href="{% url 'users:register' %}">Нет аккаунта?</a>
+
+{% endblock %}

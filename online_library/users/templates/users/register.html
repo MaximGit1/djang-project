@@ -1,27 +1,29 @@
 {% extends 'book_storage/base.html' %}
 {% block content %}
 
-<h1>Регистрация</h1>
-<form method="post">
-    {% csrf_token %}
-    <div>
-        <label>Логин</label>
-        {{form.username}}
-    </div>
-    <div>
-        <label>Пароль</label>
-        {{form.password1}}
-    </div>
-    <div>
-        <label>Пароль ещё раз</label>
-        {{form.password2}}
-    </div>
-    <div>
-    {{form.username.errors}}
-    {{form.password2.errors}}
-    </div>
+<div class="background-form">
+    <form class="registration-form" method="post">
+        <h1 class="registration-title">Регистрация</h1>
+        {% csrf_token %}
+        <div>
+            <label class="registration-label">Логин</label>
+            {{form.username}}
+        </div>
+        <div>
+            <label class="registration-label">Пароль</label>
+            {{form.password1}}
+        </div>
+        <div>
+            <label class="registration-label">Пароль ещё раз</label>
+            {{form.password2}}
+        </div>
+        <div>
+            {{form.username.errors}}
+            {{form.password2.errors}}
+        </div>
 
-    <p><button type="submit">Сохранить</button></p>
-</form>
-<a href="{% url 'users:login' %}">Есть аккаунт?</a>
+        <p><button class="registration-button" type="submit">Сохранить</button></p>
+        <a class="registration-link" href="{% url 'users:login' %}">Есть аккаунт?</a>
+    </form>
+</div>
 {% endblock %}

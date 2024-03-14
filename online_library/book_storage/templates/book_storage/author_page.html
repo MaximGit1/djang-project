@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block content %}
+<script src="{% static 'book_storage/js/author.js' %}"></script>
 <div class="author_page">
 <div class="author_img">
     {% if author.photo %}
@@ -13,14 +14,15 @@
   <div class="author_info">
     <h1>{{ author.fio_author }}</h1>
     <p>{{ author.biography }}</p>
-
   </div>
 </div>
-<div class="books_list">
-    <h2>Книги, которые написал {{ author.fio_author }}:</h2>
-    {% for book_card in books %}
+<h2 style="padding-left: 2%;">Книги, которые написал {{ author.fio_author }}:</h2>
+<div class="container_books">
+    <button class="slider__btn_prev"><img src="{% static 'book_storage/images/arrow-left.jpg' %}" style="width: 16px"></button>
+    <div class="books_list">  
+        {% for book_card in books %}
         {% if book_card.is_published %}
-            <div class="card" style="width: 18rem;">
+            <div class="card">
                 <a href="{% url 'book_page' book_card.id %}"><img src="{{ book_card.book_image.url }}" alt="{{ book_card.title }} cover"></a>
                 <div class="card-body">
                     <h3 class="card-text"><a href="{% url 'book_page' book_card.id %}">{{ book_card.title }}</a></h3>
@@ -28,6 +30,8 @@
             </div>
         {% endif %}
     {% endfor %}
+    </div>
+    <button class="slider__btn_next"><img src="{% static 'book_storage/images/arrow-right.jpg' %}" style="width: 16px"></button>
 </div>
 
 {% endblock %}

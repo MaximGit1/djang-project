@@ -28,7 +28,9 @@ def home(request, id_genre=None, type_of_book=None):
     else:
         books = Book.objects.filter(is_published=True)
         message = ''
-    context = {'title': 'Главная', 'menu': menu, 'books': books, 'message': message}
+    genres = Genre.objects.all()
+    types = TypeOfBook.objects.all()
+    context = {'title': 'Главная', 'menu': menu, 'books': books, 'message': message, 'genres': genres, 'types': types}
     return render(request, 'book_storage/index.html', context)
 
 
