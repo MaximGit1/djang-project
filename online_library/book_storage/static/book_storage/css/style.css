@@ -8,11 +8,24 @@ html, body{
     font-size: 16px;
     line-height: 1.6;
     color: #000000;
-    background-color: #f5b6b6;
+    /* background-color: #f5b6b6; */
+    background-color: #e9f3ff;
 }
+
+.container {
+    margin: auto;
+    max-width: 1366px;
+    width: 100%;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+
+
 .wrapper {
     position: relative;
-    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
   }
 .back_head{
     background-color: #333;
@@ -31,16 +44,30 @@ button{
     box-shadow: none;
     cursor: pointer;
 }
-
+.content{
+    box-sizing: border-box;
+    max-width: 1536px;
+    margin: 0 auto;
+    padding: 20px 50px;
+    padding-bottom: 90px;
+    position: relative;
+    height: 100vh;
+    padding-bottom: 80px;
+    flex:1;
+}
 .footer{
     background-color: #333;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 80px;
     color: #ccc;
+    height: 80px;
+    display: flex;
+        justify-content: center;
+        align-items:center ;
+    padding: 20px 50px;
+    position: sticky;
+    bottom: 0;    
 }
+
+
 
 a {
     color: #0066cc;
@@ -122,18 +149,19 @@ ul{
     display: flex;
     width: 100%;
     margin: auto;
-    padding: auto;
     flex-wrap: wrap; 
+    justify-content: space-around;
+    padding-top: 20px;
 }
 .card{
     padding: 20px 30px;
     width: 200px;
-    height: 430px;
+    height: 320px;
     flex: 0 0 auto;
-    margin-right: 15px;
 }
 .card img {
-    max-height: 250px;
+    height: 250px;
+    max-width: 200px;
 }
 .card-text {
     margin: 0px;
@@ -170,17 +198,11 @@ justify-content: center;
     flex: 1 0 auto;
     min-height: 400px;
 }
-.content{
-    box-sizing: border-box;
-    max-width: 1536px;
-    margin: 0 auto;
-    padding: 0 0 24px;
-    padding-bottom: 90px;
-    position: relative;
-}
+
 .left_info{
     margin-left: 30px;
-    width: 180px;
+    width: 286px;
+    margin-top: 30px;
 }
 .left_info img{width: 180px;
 padding-bottom: 10px;}
@@ -204,7 +226,7 @@ padding-bottom: 10px;}
 
 .right_info{
     padding: 10px 20px;
-    width: 300px;
+    width: 400px;
 }
 .right_info a{
     padding: 10px 15px;
@@ -213,14 +235,15 @@ padding-bottom: 10px;}
     color: #fff;
     cursor: pointer;
     border-radius: 7px;
-    width: 180px;
 }
+
 .right_info a:hover{
     border: 1px solid #014792;
     background-color: #014792;
 }
 .right_info p{
     margin: 30px 0;
+    
 }
 .type_book{
     display: inline-flex;
@@ -233,6 +256,9 @@ padding-bottom: 10px;}
 .center_info{
     padding: 0 20px;
     width: 1500px;
+}
+.author a img{
+    border-radius: 30px;
 }
 .author a:last-child{
     margin-left: 9px;
@@ -279,13 +305,14 @@ padding-bottom: 10px;}
     overflow: hidden;
     position: relative;
     width: 100%;
+    background-color: #bdcee1;
 }
 .slider__btn_prev,
 .slider__btn_next {
     cursor: pointer;
     position: absolute; 
     top: 50%; 
-    transform: translateY(-230%); 
+    transform: translateY(-150%); 
     width: 30px;
     height: 30px;
     background-color: white;
@@ -308,6 +335,7 @@ padding-bottom: 10px;}
     width: 1000px;
 }
 .container-authors{
+    flex-wrap: wrap;
     display: flex;
     width: 100%;
 }
@@ -376,6 +404,14 @@ padding-bottom: 10px;}
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+.auth-form button[type="button"], .registration-form button[type="button"]{
+    position: relative;
+    left: 168px;
+    top: -39px;
+}
+.auth-form button[type="button"] img, .registration-form button[type="button"] img{
+    width: 50px;
+}
 
 .auth-form button[type="submit"] {
     width: 96%;
@@ -421,9 +457,14 @@ padding-bottom: 10px;}
     margin-top: 20px;
 }
 .card-like{
-    margin-right: 20px;
-    width: 150px;
-    display: block;
+    padding: 20px 30px;
+    width: 160px;
+    height: 300px;
+    flex: 0 0 auto;
+}
+.card-like a img{
+    height:240px;
+    width: 100%;
 }
 .logout-link {
     padding: 10px 20px;
@@ -513,4 +554,263 @@ padding-bottom: 10px;}
 .registration-form .error-message {
     color: #ff0000;
     margin-bottom: 20px;
+}
+.comment-profile{
+    display: flex;
+}
+.comment-profile a img{
+    border-radius: 20px;
+}
+.comment-delete{
+    color: red;
+}
+.comment textarea{
+    height: 80px;
+    width: 400px;
+    max-width: 1038px;
+}
+.comment{
+    word-wrap: break-word;
+}
+/* Стилизация пагинации */
+.pagination {
+    margin-top: 20px;
+    margin-left: 40px;
+    text-align: center;
+}
+
+.pagination ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.pagination ul li {
+    display: inline;
+    margin-right: 5px;
+}
+
+.pagination ul li a,
+.pagination ul li p {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #f2f2f2;
+    color: #333;
+    text-decoration: none;
+}
+
+.pagination ul li a.active {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.pagination ul li a:hover {
+    background-color: #ddd;
+}
+
+.pagination ul li p {
+    background-color: #ddd;
+    cursor: default;
+}
+.book_scroll{
+    position: fixed;
+}
+.download_links{
+    position: fixed;
+}
+#copyForm{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+#copyForm {
+    display: none; 
+    background: rgba(0, 0, 0, 0.5);
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000; 
+}
+
+#copyForm input[type="button"] {
+    background-color: #4caf50;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+
+    cursor: pointer;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+#copyForm textarea {
+    width: 30%;
+    height: 33px;
+}
+
+.closeButton {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 20px;
+}
+.support{
+    display: flex;
+    justify-content: flex-end;
+    color: #000000;
+}
+.back1{
+    background-color: #5757e4;
+    width: 100%;
+    height: 30px;
+}
+.genres-container {
+    margin-bottom: 20px;
+}
+
+.genre-link {
+    display: block;
+    margin-bottom: 5px;
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+}
+
+.genre-link:hover {
+    color: #555;
+}
+
+.types-container {
+    margin-bottom: 20px;
+}
+
+.type-link {
+    display: block;
+    margin-bottom: 5px;
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+}
+
+.type-link:hover {
+    color: #555;
+}
+.line-grey{
+    background-color:#8e9b9f;
+    height:5px;
+    width: 400px;
+}
+.home{
+    padding: 10px 15px;
+    border: 1px solid #007bff;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 7px;
+    display: flex;
+    justify-content: center;
+    font-size: 30px;
+}
+.home:hover{
+    border: 1px solid #014792;
+    background-color: #014792;
+}
+
+/* CSS для формы связи */
+#contactForm {
+    font-family: Arial, sans-serif;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+#contactForm h2 {
+    text-align: center;
+}
+
+#contactForm .form-group {
+    margin-bottom: 15px;
+}
+
+#contactForm label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+#contactForm input[type="text"],
+#contactForm input[type="email"],
+#contactForm textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#contactForm button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+}
+
+#contactForm button:hover {
+    background-color: #45a049;
+}
+
+#contactForm button:active {
+    background-color: #3e8e41;
+}
+
+.hidden {
+    display: none;
+}
+
+#showFormSup {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+}
+.search_page_btns{
+    display: inline-block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #fff; /* Цвет текста */
+    background-color: #007bff; /* Цвет фона */
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.search_page_btns:hover {
+    background-color: #0056b3; /* Цвет фона при наведении */
+}
+
+.search_page_btns:active {
+    background-color: #004187; /* Цвет фона при активации (нажатии) */
 }

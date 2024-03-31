@@ -90,12 +90,14 @@ class Book(models.Model):
     time_create = models.DateTimeField(auto_now_add=True, verbose_name='Создано')
     time_update = models.DateTimeField(auto_now=True, verbose_name='Обновлено')
     rating = models.IntegerField(default=0, verbose_name='Рейтинг')
+    VERIFIED_STATUS = [(False, 'Не проверено'), (True, 'Проверено')]
+    is_verified = models.BooleanField(choices=VERIFIED_STATUS, default=False, verbose_name='Модерация')
     is_published = models.BooleanField(default=True, verbose_name='Опубликовано')
 
     class Meta:
         verbose_name = 'Книга'
         verbose_name_plural = 'Книги'
-        ordering = ['time_update', 'title']
+        ordering = ['-rating', 'time_update', 'title']
 
     def __str__(self):
         return self.title

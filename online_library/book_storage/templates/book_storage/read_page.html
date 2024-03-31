@@ -2,8 +2,12 @@
 {% load static %}
 
 {% block content %}
-<div class="left_info">
-    <img src="{{ book.book_image.url }}" style="margin-top: 20px;">
+<div style="display: flex">
+    <img src="{{ book.book_image.url }}" style="margin-top: 20px; margin-right: 20px">
+    <div>
+    <h1>{{ book.title }}</h1>
+    <h2>{{ book.id_author }}</h2>
+    </div>
 </div>
 <h3 class="read_text">
 {{ book.read_text }}

@@ -16,8 +16,33 @@
     <p>{{ author.biography }}</p>
   </div>
 </div>
-<h2 style="padding-left: 2%;">Книги, которые написал {{ author.fio_author }}:</h2>
-<div class="container_books">
+
+{% for bis in books_in_seria %}
+<h2>{{ book.book_series }}</h2>
+<div class="container_books" id="slider_{{ forloop.counter }}">
+
+    <button class="slider__btn_prev"><img src="{% static 'book_storage/images/arrow-left.jpg' %}" style="width: 16px"></button>
+
+    <div class="books_list">
+        {% for book_card in bis %}
+        {% if book_card.is_published %}
+            <div class="card">
+                <a href="{% url 'book_page' book_card.id %}"><img src="{{ book_card.book_image.url }}" alt="{{ book_card.title }} cover"></a>
+                <div class="card-body">
+                    <h3 class="card-text"><a href="{% url 'book_page' book_card.id %}">{{ book_card.title|truncatechars:35 }}</a></h3>
+                </div>
+            </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    <button class="slider__btn_next"><img src="{% static 'book_storage/images/arrow-right.jpg' %}" style="width: 16px"></button>
+</div>
+{% endfor %}
+
+
+
+<h2 style="padding-left: 2%;">Другие книги, которые написал {{ author.fio_author }}:</h2>
+<div class="container_books" id="slider_other">
     <button class="slider__btn_prev"><img src="{% static 'book_storage/images/arrow-left.jpg' %}" style="width: 16px"></button>
     <div class="books_list">  
         {% for book_card in books %}
@@ -33,5 +58,8 @@
     </div>
     <button class="slider__btn_next"><img src="{% static 'book_storage/images/arrow-right.jpg' %}" style="width: 16px"></button>
 </div>
+
+
+</div></div>
 
 {% endblock %}

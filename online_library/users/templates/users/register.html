@@ -1,9 +1,17 @@
 {% extends 'book_storage/base.html' %}
+{% load static %}
 {% block content %}
-
+<style>
+    .footer{display: none}
+ </style>
 <div class="background-form">
     <form class="registration-form" method="post">
+        <div style="display: flex;">
         <h1 class="registration-title">Регистрация</h1>
+        <button type="button" onclick="history.go(-2);">
+            <img src="{% static 'book_storage/images/cancel.png' %}">
+        </button>
+    </div>
         {% csrf_token %}
         <div>
             <label class="registration-label">Логин</label>

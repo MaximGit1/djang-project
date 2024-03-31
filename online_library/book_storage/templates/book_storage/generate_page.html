@@ -1,0 +1,29 @@
+{% extends 'book_storage/base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .card{
+        height: 380px;
+    }
+</style>
+<h2>Книги по вашему запросу</h2>
+<div class="products">
+{% for res in resources %}
+<div class="card">
+
+<a href="{% url 'generate_create' res.url %}">
+    <img src="{{res.img}}">
+    <p>{{ res.title }}</p></a>
+<p>{{ res.author }}</p>
+
+</div>
+
+{% empty %}
+<p>По вашему запросу мы не смогли найти книги</p>
+{% endfor %}
+</div>
+<a class="home" href="{% url 'home' %}">На главную</a>
+
+
+
+{% endblock %}

@@ -3,6 +3,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" href="{% static 'book_storage/images/favicon.png' %}">
     <link rel="stylesheet" href="{% static 'book_storage/css/style.css' %}">
     <script src="{% static 'book_storage/js/base.js' %}"></script>
     <title>{{ title }}</title>
@@ -10,7 +11,7 @@
 <body>
     <div class="wrapper">
 {% block main_menu %}
-<div class="back_head" style="background-color: #333;">
+<header class="back_head" style="background-color: #333;">
 <div class="header">
     <div class="logo">
         <a  href="{% url 'home'  %}">
@@ -47,29 +48,31 @@
     <div class="dialog-content" onclick="event.stopPropagation()">
         <div class="gen">
             <h4>Жанры</h4>
-            {% for genre in genres %}
-                <a href="{% url 'home_genre' genre.id %}">{{ genre.genre }}</a><br>
+            {% for genre_all in genres_all|slice:":10" %}
+                <a href="{% url 'home_genre' genre_all.id %}">{{ genre_all.genre }}</a><br>
             {% endfor %}
         </div>
         <div class="type">
             <h4>Тип книг</h4>
-            {% for type in types %}
-                <a href="{% url 'home_type' type.id %}">{{ type.type_of_book }}</a><br>
+            {% for type_all in types_all|slice:":10" %}
+                <a href="{% url 'home_type' type_all.id %}">{{ type_all.type_of_book }}</a><br>
             {% endfor %}
         </div>
+            <a href="{% url 'tags_page' %}">Все теги</a>
     </div>
 </div>
-</div>
+</header>
 {% endblock main_menu %}
-<div class="content">
+<main class="content">
 
 {% block content %}
 
 {% endblock %}
-</div>
+</main>
+<footer class="back_head" style="background-color: #333;">
  <div class="footer">
-    <p class="text-center" style="padding-top: 30px;">Online library. Все права не защищены.</p>   
- </div>
+    <p>Online library. Все права не защищены.</p>   
+ </div></footer>
 </div>
 </body>
 </html>

@@ -45,10 +45,14 @@
     <p>По вашему запросу мы не нашли такого автора :(</p>
 {% endfor %}
 
+{% if request.user.is_authenticated and request.user.is_staff %}
+<h2>Beta Функция</h2>
+<a class="search_page_btns"  href="{% url 'generate' search_quary_ %}">Попробовать найти книгу на стронних ресурсах</a>
+
+{% endif %}
 
 
-
-<a href="{% url 'home' %}">На главную</a>
+<a class="search_page_btns" href="{% url 'home' %}">На главную</a>
 
 
 

@@ -17,4 +17,6 @@ urlpatterns = [
     path('book/comment/<int:id_comment>', delete_comment, name='delete_comment'),
     path('search/', search, name='search'),
     path('tags/', tags_page, name='tags_page'),
+    path('generate/<path:book_search>/', generate, name='generate'),
+    path('generate-create/<path:book_url>/', create_generated_book, name='generate_create'),
 ]

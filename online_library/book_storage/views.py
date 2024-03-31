@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
@@ -7,16 +8,9 @@ from .forms import CommentForm
 from .models import *
 from django.views.decorators.http import require_POST
 from django.db.models import Q
-
-menu = (('Жанры', 'tags_page'), ('Авторы', 'authors_page'), ('О нас', 'about'))
-
-
-# class LibraryHome(ListView):
-#    model = Book
-#    template_name = 'book_storage/index.html'
-#    context_object_name = 'books'
-#    extra_context = {'title': 'Главная', 'menu': menu}
-#    #paginate_by = 12
+from global_values import DATA
+import parse
+import asyncio
 
 def home(request, id_genre=None, type_of_book=None):
     if id_genre:
@@ -30,18 +24,32 @@ def home(request, id_genre=None, type_of_book=None):
         message = ''
     genres = Genre.objects.all()
     types = TypeOfBook.objects.all()
-    context = {'title': 'Главная', 'menu': menu, 'books': books, 'message': message, 'genres': genres, 'types': types}
+    paginator = Paginator(books, 20)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {**DATA, 'title': 'Главная', 'books': books, 'message': message, 'page_obj': page_obj}
     return render(request, 'book_storage/index.html', context)
 
 
 def book_page(request, id_book):
-    book = Book.objects.get(pk=id_book)
-    book_ser = bool(book.book_series)
-    ser_books = Book.objects.filter(book_series=book_ser) if book_ser else False
-    if ser_books:
-        ser_books = [(b.book_ind, b.title, b.pk) for b in ser_books]
-        ser_books.sort()
-
+    book = Book.objects.get(pk=id_book)  # выбор книги по id
+    ser_books = False
+    if book.book_series:
+        ser = book.book_series
+        ser_bks = Book.objects.filter(book_series=ser)
+        ser_books = []
+        for b in ser_bks:
+            ser_books.append(
+                [b.book_ind,
+                {'title': b.title, 'pk': b.pk}
+                 ])
+        try:
+            ser_books.sort()
+        except:
+            pass
+        ss = [sb[-1] for sb in ser_books]
+        ser_books = ss
     genres = book.id_genre.all()
     author = book.id_author
     rate = 0
@@ -58,22 +66,35 @@ def book_page(request, id_book):
         check_comment = Comment.objects.filter(book=id_book, user=user)
         check = not bool(check_comment)
 
-    data = {'title': f'Книга {book.title}', 'book': book, 'genres': genres, 'menu': menu, 'author': author,
+    data = {**DATA, 'title': f'Книга {book.title}', 'book': book, 'genres': genres, 'author': author,
             'ser_books': ser_books, 'rate': rate, 'comments': comments, 'form': form, 'check': check}
     return render(request, 'book_storage/book_page.html', data)
 
 
 def author_page(request, id_author):
     author = Author.objects.get(pk=id_author)
-    books = Book.objects.filter(id_author=id_author)
-    data = {'title': f'Страница автора', 'author': author, 'books': books, 'menu': menu}
+    all_books = Book.objects.filter(id_author=id_author)
+    serias_books, books = set(), []
+    for b in all_books:
+        if b.book_series != None:
+            serias_books.add(b.book_series)
+        else:
+            books.append(b)
+    books_in_seria = []
+    for b in serias_books:
+        try:
+            seria = BookSeries.objects.get(book_series=b.book_series)
+            books_in_seria.append(Book.objects.filter(book_series=seria))
+        except:
+            pass
+    data = {**DATA, 'title': f'Страница автора', 'author': author, 'books': books, 'books_in_seria': books_in_seria}
     return render(request, 'book_storage/author_page.html', data)
 
 
 def authors_page(request):
     authors = Author.objects.all()
     books = Book.objects.all()
-    data = {'title': f'Все авторы', 'authors': authors, 'menu': menu}
+    data = {**DATA, 'title': f'Все авторы', 'authors': authors}
     return render(request, 'book_storage/authors_page.html', data)
 
 
@@ -95,12 +116,12 @@ def remove_liked_book(request, id_lk_book):
 
 def read_page(request, id_book):
     book = Book.objects.get(pk=id_book)
-    data = {'title': f'{book.title}', 'menu': menu, 'book': book}
+    data = {**DATA, 'title': f'{book.title}', 'book': book}
     return render(request, 'book_storage/read_page.html', data)
 
 
 def about_page(request):
-    context = {'title': 'Кто мы?', 'menu': menu}
+    context = {**DATA, 'title': 'Кто мы?'}
     return render(request, 'book_storage/about.html', context)
 
 
@@ -129,7 +150,7 @@ def add_book_rating(request, id_book, value):
     return redirect(uri)
 
 
-def book_comments(request, id_book):
+def book_comments(request, id_book):   # try to del
     book1 = Book.objects.get(pk=id_book)
     if request.method == 'POST':
         form = CommentForm(request.POST)
@@ -161,16 +182,59 @@ def search(request):
         books = Book.objects.filter(Q(title__icontains=search_quary) | Q(description__icontains=search_quary),
                                     is_published=True)
         authors = Author.objects.filter(fio_author__icontains=search_quary)
-        #seria = BookSeries.objects.filter(book_series__icontains=search_quary)
+        # seria = BookSeries.objects.filter(book_series__icontains=search_quary)
     else:
         return HttpResponseRedirect(reverse('home'))
 
-    data = {'title': 'Результаты поиска', 'books': books, 'authors': authors, 'menu': menu}
+    data = {**DATA, 'title': 'Результаты поиска', 'books': books, 'authors': authors, 'search_quary_': search_quary}
     return render(request, 'book_storage/search_page.html', data)
 
 
-def tags_page(request):
+def tags_page(request):  # try to del
     genres = Genre.objects.all()
     types = TypeOfBook.objects.all()
-    data = {'title': 'Выбрать книгу', 'genres': genres, 'types': types, 'menu': menu}
+    data = {'title': 'Выбрать книгу', 'genres': genres, 'types': types, }
     return render(request, 'book_storage/tags_page.html', data)
+
+def generate(request, book_search):
+    search_quary = book_search
+    if search_quary:
+        loop = asyncio.new_event_loop()
+        res = loop.run_until_complete(parse.main(search_quary))
+        #return HttpResponse('res:', res)
+        data = {**DATA, 'resources': res}
+        return render(request, 'book_storage/generate_page.html', data)
+
+
+def create_generated_book(request, book_url):
+    loop = asyncio.new_event_loop()
+    res = loop.run_until_complete(parse.download_book(book_url))
+    if Author.objects.filter(fio_author=res['author']).exists():
+        current_author = Author.objects.get(fio_author=res['author'])
+    else:
+        res_author = loop.run_until_complete(parse.author_parse(res['author_url']))
+        current_author = Author.objects.create(fio_author=res_author['author_fio'], biography=res_author['bio'], photo=res_author['img'])
+    if res['seria']:
+        if BookSeries.objects.filter(book_series=res['seria']).exists():
+            current_seria = BookSeries.objects.get(book_series=res['seria'])
+        else:
+            current_seria = BookSeries.objects.create(book_series=res['seria'])
+    else:
+        current_seria = None
+
+
+    book = Book.objects.create(title=res['title'], id_author=current_author, book_series=current_seria, writing_year=res['year'],
+                               id_publisher=Publisher.objects.get(pk=1),
+                               type_of_book=TypeOfBook.objects.get(pk=4), description=res['description'], read_text='Не сгенерировано',
+                               book_image=res['img'], fb2_path=res['fb2'], epub_path=res['epub'])
+    for tag in res['tags']:
+        if not Genre.objects.filter(genre=tag).exists():
+            current_tag = Genre.objects.create(genre=tag)
+        else:
+            current_tag = Genre.objects.get(genre=tag)
+        book.id_genre.add(current_tag)
+    uri = reverse('book_page', args=(book.pk,))
+    return redirect(uri)
+
+
+    #return HttpResponse(f'text: {book_url}\nAuthor --> exists\nres = {res}')

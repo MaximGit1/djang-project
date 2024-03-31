@@ -1,8 +1,15 @@
 {% extends 'book_storage/base.html' %}
+{% load static %}
 {% block content %}
+
 <div class="background-form">
 <div class="auth-form">
-    <h1>Авторизация</h1>
+    <div style="display: flex;">
+        <h1>Авторизация</h1>
+<button type="button" onclick="history.back();">
+    <img src="{% static 'book_storage/images/cancel.png' %}">
+</button>
+    </div>
     <form method="post">
         {% csrf_token %}
         <div>

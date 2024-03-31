@@ -3,154 +3,199 @@
 
 {% block content %}
 <script src="{% static 'book_storage/js/book_page.js' %}"></script>
-    <div class="layout_book">
-        
-<div class="FunctionalBlock">
-<ul>
-    <li>
-        <button type="button" class="FunctionalBlock_button" id="button_save">
-            <div class="button">
-                <span class="FunctionalBlock_save_icon">❤</span>
-                <span class="FunctionalBlock_save_text"><a href="{% url 'book_add' book.id %}">Отложить</a>></span>
-              </div>
-        </button>
-        <button type="button" class="FunctionalBlock_button" id="button_readen">
-            {% comment %}<div class="button">
-                <span class="FunctionalBlock_icon">✓</span>
-                <span class="FunctionalBlock_save_text">Отметить прочитанным</span>
-              </div>
-        </button>{% endcomment %}
-        <button type="button" class="FunctionalBlock_button" id="button_copy">
-            <div class="button">
-                <span class="FunctionalBlock_icon_copy">🔗</span>
-                <span class="FunctionalBlock_save_text">Нажми меня</span>
-              </div>
-        </button>
+<div class="layout_book">
 
-</ul></div><div class="book_main">
-<div class="left_info">
-    <img src="{{ book.book_image.url }}">
-    {% if book.rating > 0  %}
-      <div class="rate-green" style="height: 5px; width: 180px; background-color: green"></div>
-      {% elif book.rating < 0 %}
-      <div class="rate-red" style="height: 5px; width: 180px; background-color: red"></div>
-      {% else %}
-      <div class="rate-grey" style="height: 5px; width: 180px; background-color: grey"></div>
-      {% endif %}
-    <br>
-    <a href="{% url 'read_page' book.id %}" class="read_fragment">Читать фрагмент</a>
-</div>
-<div class="center_info">
-    <h1>{{ book.title }}</h1>
-    <div class="type_book">
-        {% if book.mp3_path %}
-                        <img src="{% static 'book_storage/images/text_audio.svg' %}" alt="Изображение"><div>текст и аудиокнига</div>
-                        {% else %}
-                        <img src="{% static 'book_storage/images/text.svg' %}" alt="Изображение"><div>текст</div>
-                    {% endif %}
-    </div>
-    <div class="seriya">
-    {% if book.book_series %}
-        <p>Входит в серию <b>{{ book.book_series }}</b>:</p>
-        {% if ser_books %}
-        <button onclick="show_seria()" style="color: blue; font: normal 14px/20px ALS Sirius,Arial,Helvetica Neue,Helvetica,sans-serif;">Посмотреть содержимое</button>
-        <div class="sh_books" style="display: none;">
-            {% for book_ind in ser_books %}
-                <a href="{% url 'book_page' book_ind.2 %}" >{{ book_ind.1 }}</a><br>
-            {% endfor %}
+    <div class="FunctionalBlock">
+        <ul>
+            <li>
+                <button type="button" class="FunctionalBlock_button" id="button_save" onclick="alert(`Книга {{ book.title }} отложена`)">
+                    <div class="button">
+                        <span class="FunctionalBlock_save_icon">❤</span>
+                        <span class="FunctionalBlock_save_text"><a
+                                href="{% url 'book_add' book.id %}">Отложить</a>></span>
+                    </div>
+                </button>
+                <button type="button" class="FunctionalBlock_button" id="button_readen">
+                    {% comment %}
+                    <div class="button">
+                        <span class="FunctionalBlock_icon">✓</span>
+                        <span class="FunctionalBlock_save_text">Отметить прочитанным</span>
+                    </div>
+                </button>
+                {% endcomment %}
+                <button type="button" onclick="showModal()"class="FunctionalBlock_button" id="copyButton">
+                    <div class="button">
+                        <span class="FunctionalBlock_icon_copy">🔗</span>
+                        <span class="FunctionalBlock_save_text">Поделиться</span>
+                    </div>
+                </button>
+        </ul>
+        <div id="copyForm">
+            <input type="button" value="Скопировать ссылку" onclick="Copy();" />
+            <textarea id="url" rows="1" cols="30"></textarea>
+            <button type="button" onclick="history.go(0);">
+                <img src="{% static 'book_storage/images/cancel.png' %}" width=45px>
+            </button>
         </div>
-        {% endif %}
-    {% else %}
-        <p>Данная книга не входит в цикл книг</p>
-    {% endif %}
     </div>
-    <h3>Автор</h3>
-    <div class="author"><a href="{% url 'author_page' book.id_author.id %}">
-        {% if author.photo %}
-    <img src="{{ author.photo.url }}",  width="40px">
-    {% else %}
-    <img src="{% static 'book_storage/images/default.jpg' %}", width="40px">
-    {% endif %}</a>
-        <a href="{% url 'author_page' book.id_author.id %}">{{ book.id_author }}</a></div>
-    <br>
-    <p>Рейтинг: {{ book.rating }}</p>
-    {% if rate == 1 %}
-    <a href="{% url 'book_rating_change' book.id 1 %}"><img src="{% static 'book_storage/images/like-selected.png' %}" width="25px"></a>
-    {% else %}
-    <a href="{% url 'book_rating_change' book.id 1 %}"><img src="{% static 'book_storage/images/like.png' %}" width="25px"></a>
-    {% endif %}
-    {% if rate == -1 %}
-    <a href="{% url 'book_rating_change' book.id 2 %}"><img src="{% static 'book_storage/images/dislike-selected.png' %}" width="25px"></a>
-    {% else %}
-    <a href="{% url 'book_rating_change' book.id 2 %}"><img src="{% static 'book_storage/images/dislike.png' %}" width="25px"></a>
-    {% endif %}
-    <h3>Теги</h3>
-        <div class="genres">
-            <a href="{% url 'home_type' book.type_of_book.id %}">{{ book.type_of_book }}</a>
-            {% for genre in genres %}
-            <a href="{% url 'home_genre' genre.id %}">{{ genre }}</a>
-            {% endfor %}</div>
+    <div class="book_main">
+        <div class="left_info">
+            <div class="book_scroll">
+            <img src="{{ book.book_image.url }}">
+            {% if book.rating > 0 %}
+            <div class="rate-green" style="height: 5px; width: 180px; background-color: green"></div>
+            {% elif book.rating < 0 %}
+            <div class="rate-red" style="height: 5px; width: 180px; background-color: red"></div>
+            {% else %}
+            <div class="rate-grey" style="height: 5px; width: 180px; background-color: grey"></div>
+            {% endif %}
+            <br>
+            <a href="{% url 'read_page' book.id %}" class="read_fragment">Читать фрагмент</a>
+        </div></div>
+        <div class="center_info">
+            <div>
+                <h1 id="book_title">{{ book.title }}</h1>
+                {% if book.is_verified %}
+                    <img src="{% static 'book_storage/images/true.png' %}" width="25px">
+                {% else %}
+                    <img src="{% static 'book_storage/images/false.png' %}" width="25px">
+                {% endif %}
+            </div>
+
+            <div class="type_book">
+                {% if book.mp3_path %}
+                <img src="{% static 'book_storage/images/text_audio.svg' %}" alt="Изображение">
+                <div>текст и аудиокнига</div>
+                {% else %}
+                <img src="{% static 'book_storage/images/text.svg' %}" alt="Изображение">
+                <div>текст</div>
+                {% endif %}
+            </div>
+            <div class="seriya">
+                {% if book.book_series %}
+                <p>Входит в серию <b>{{ book.book_series }}</b>:</p>
+                {% if ser_books %}
+                <button onclick="show_seria()"
+                        style="color: blue; font: normal 14px/20px ALS Sirius,Arial,Helvetica Neue,Helvetica,sans-serif;">
+                    Посмотреть содержимое
+                </button>
+                <div class="sh_books" style="display: none;">
+                    {% for bk in ser_books %}
+                    <a href="{% url 'book_page' bk.pk %}">{{ bk.title }}</a><br>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% else %}
+                <p>Данная книга не входит в цикл книг</p>
+                {% endif %}
+            </div>
+            <h3>Автор</h3>
+            <div class="author"><a href="{% url 'author_page' book.id_author.id %}">
+                {% if author.photo %}
+                <img src="{{ author.photo.url }}" , width="40px">
+                {% else %}
+                <img src="{% static 'book_storage/images/default.jpg' %}" , width="40px">
+                {% endif %}</a>
+                <a href="{% url 'author_page' book.id_author.id %}">{{ book.id_author }}</a></div>
+            <br>
+            <p>Рейтинг: {{ book.rating }}</p>
+            {% if rate == 1 %}
+            <a href="{% url 'book_rating_change' book.id 1 %}"><img
+                    src="{% static 'book_storage/images/like-selected.png' %}" width="25px"></a>
+            {% else %}
+            <a href="{% url 'book_rating_change' book.id 1 %}"><img src="{% static 'book_storage/images/like.png' %}"
+                                                                    width="25px"></a>
+            {% endif %}
+            {% if rate == -1 %}
+            <a href="{% url 'book_rating_change' book.id 2 %}"><img
+                    src="{% static 'book_storage/images/dislike-selected.png' %}" width="25px"></a>
+            {% else %}
+            <a href="{% url 'book_rating_change' book.id 2 %}"><img src="{% static 'book_storage/images/dislike.png' %}"
+                                                                    width="25px"></a>
+            {% endif %}
+            <h3>Теги</h3>
+            <div class="genres">
+                <a href="{% url 'home_type' book.type_of_book.id %}">{{ book.type_of_book }}</a>
+                {% for genre in genres %}
+                <a href="{% url 'home_genre' genre.id %}">{{ genre }}</a>
+                {% endfor %}
+            </div>
             <div class="date_of_writing">
                 <h3>Дата написания</h3></div>
-    {{ book.writing_year }}
-    <div class="publisher">
-        <h3>Издатель</h3>
-        <p>{{ book.id_publisher }}</p>
-    </div>
+            {{ book.writing_year }}
+            <div class="publisher">
+                <h3>Издатель</h3>
+                <p>{{ book.id_publisher }}</p>
+            </div>
 
-<div class="description">
-    <h3>Описание</h3>
-    <p>{{ book.description }}</p>
-</div>
-    {% if request.user.is_authenticated %}
-        {% if check %}
+            <div class="description">
+                <h3>Описание</h3>
+                <p>{{ book.description }}</p>
+            </div>
+             <div>
+                 <br>
+                {% if book.is_verified %}
+                <img src="{% static 'book_storage/images/true.png' %}" width="30px">
+                <p>Данная книги проверена администрацией.</p>
+                {% else %}
+                <img src="{% static 'book_storage/images/false.png' %}" width="30px">
+                <p>Данная книга не проходила провеку администрации.</p>
+                <p>Это значит, что эта страница была сгенерирована по запросу пользователей, и содержание этой страницы
+                    может быть искажено. Если вы нашли ошибку или вы захотели пожаловаться на книгу, то перейдите
+                <a href="#">По этой ссылке</a> чтобы связаться с администрацией.</p>
+                {% endif %}
+            </div>
+            {% if request.user.is_authenticated %}
+            {% if check %}
             {% include 'book_storage/includes/comment_form.html' %}
-        {% endif %}
-    {% else %}
-    <h4>Чтобы оставить комментарий, <a href="{% url 'users:login' %}">авторизируйтесь</a></h4>
-    {% endif %}
-
-
-<div class="comments">
-    {% with comments.count as total_comments %}
-    <h3>{{ total_comments }} комментариев</h3>
-    {% endwith %}
-    {% for comment in comments %}
-    <div class="comment">
-        {% if comment.user.avatar %}
-        <a href="{% url 'users:other_profile' comment.user.id %}"><img src="{{ comment.user.avatar.url }}" width="100px"></a>
-        {% else %}
-        <a href="{% url 'users:other_profile' comment.user.id %}"><img src="{% static 'book_storage/images/default.jpg' %}" width="100px"></a>
-        {% endif %}
-        <a href="{% url 'users:other_profile' comment.user.id %}">{{ comment.user.nickname }}</a>
-        {{ comment.text|linebreaks }}
-        {% if request.user.is_authenticated %}
-            {% if request.user.id == comment.user.id %}
-                <a href="{% url 'delete_comment' comment.id %}">Удалить</a>
             {% endif %}
-        {% endif %}
+            {% else %}
+            <h4>Чтобы оставить комментарий, <a href="{% url 'users:login' %}">авторизируйтесь</a></h4>
+            {% endif %}
 
+
+            <div class="comments">
+                {% with comments.count as total_comments %}
+                <h3>{{ total_comments }} комментариев</h3>
+                {% endwith %}
+                {% for comment in comments %}
+                <div class="comment">
+                    <div class="comment-profile">
+                    {% if comment.user.avatar %}
+                    <a href="{% url 'users:other_profile' comment.user.id %}"><img src="{{ comment.user.avatar.url }}" width="50px"></a>
+                    {% else %}
+                    <a href="{% url 'users:other_profile' comment.user.id %}"><img src="{% static 'book_storage/images/default.jpg' %}" width="100px"></a>
+                    {% endif %}
+                    <a href="{% url 'users:other_profile' comment.user.id %}">{{ comment.user.nickname }}</a>
+                    </div>
+                    {{ comment.text|linebreaks }}
+                    {% if request.user.is_authenticated %}
+                        {% if request.user.id == comment.user.id %}
+                            <a class="comment-delete" href="{% url 'delete_comment' comment.id %}">Удалить</a>
+                        {% endif %}
+                    {% endif %}
+            
+                </div>
+                {% empty %}
+                <p>Здесь нет комментариев. Вы можете стать первым!</p>
+                {% endfor %}
+            </div>
+
+
+        </div>
+        <div class="right_info">
+            <div class="download_links">
+            <p><a class="fb2" href="{{ book.fb2_path.url }}">Скачать FB2</a></p>
+            {% if book.epub_path %}
+            <p><a class="epub" href="{{ book.epub_path.url }}">Скачать EPUB</a></p>
+            {% endif %}
+            {% if book.mp3_path %}
+            <p><a class="mp3" href="{{ book.mp3_path.url }}">Скачать MP3</a></p>
+            {% endif %}
+        </div>
     </div>
-    {% empty %}
-    <p>Здесь нет комментариев. Вы можите стать первым!</p>
-    {% endfor %}
+    </div>
 </div>
-
-
-</div>
-<div class="right_info">
-    <p><a class="fb2" href="{{ book.fb2_path.url }}">Скачать FB2</a></p>
-{% if book.epub_path %}
-<p><a class="epub" href="{{ book.epub_path.url }}">Скачать EPUB</a></p>
-{% endif %}
-{% if book.mp3_path %}
-<p><a class="mp3" href="{{ book.mp3_path.url }}">Скачать MP3</a></p>
-{% endif %}
-</div>
-</div>
-</div>
-
-
 
 
 {% endblock %}

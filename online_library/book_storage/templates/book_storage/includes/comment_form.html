@@ -1,6 +1,6 @@
 <h2>Добавить новый комментарий</h2>
 <form action="{% url 'book_comment' book.id %}" method="post">
-    <div>
+    <div class="comment">
         {{form.text}}
     </div>
     {% csrf_token %}

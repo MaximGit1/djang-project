@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     authorInfoElements.forEach(function (element) {
         let biographyUrl = element.getAttribute('data-biography');
-        biography.push(biographyUrl.substring(0, 200));
+        biography.push(biographyUrl.substring(0, 150));
         let authorUrl = element.getAttribute('data-page-url')
         authors.push(authorUrl)
     });

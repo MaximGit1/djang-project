@@ -6,14 +6,12 @@
 <div class="container-authors">
 {% for author in authors %}
 <div class="card-author">
-<div class="author_img">
     {% if author.photo %}
     <a href="{% url 'author_page' author.id %}">
         <img src="{{ author.photo.url }}" alt="{{ author.fio_author }} photo" height='250px' style='border-radius:20px'></a>
     {% else %}
-    <a href="{% url 'author_page' author.id %}"><img src="{% static 'book_storage/images/default.jpg' %}"alt="Default photo" height='300px'></a>
+    <a href="{% url 'author_page' author.id %}"><img src="{% static 'book_storage/images/default.jpg' %}"alt="Default photo" height='250px' style='border-radius:20px'></a>
     {% endif %}
-  </div>
 <div data-biography="{{ author.biography }}" data-page-url="{% url 'author_page' author.id %}" class="author_info">
 
     <h1><a href="{% url 'author_page' author.id %}">{{ author.fio_author }}</a></h1>
